@@ -1,0 +1,204 @@
+﻿
+@{
+    ViewBag.Title = "Inbox";
+    Layout = "~/Views/Shared/_adminview.cshtml";
+}
+
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<!--inner block start here-->
+<div class="inner-block" style="padding-bottom:300px">
+    <div class="inbox">
+        <h2>Inbox</h2>
+        <div class="col-md-4 compose">
+            <div class="mail-profile">
+                <div class="mail-pic">
+                    <a href="#"><img style="width:70px;height:70px;" src="@Url.Content("~/Content/mytemplate/")images/user.png" alt=""></a>
+                </div>
+                @{ 
+                    var admin = (WebApplication1.Models.User)Session["Admin"];
+                }
+                <div class="mailer-name">
+                    <h5><a href="#">@admin.Nmae</a></h5>
+                    <h6><a href="mailto:info@example.com">@admin.Email</a></h6>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            
+            @{ 
+                var Mail_count= ViewBag.Mail_count;
+            }
+            <div class="compose-bottom">
+                <nav class="nav-sidebar">
+                    <ul class="nav tabs">
+                        <li class="active"><a href="#tab1" data-toggle="tab"><i class="fa fa-inbox"></i>Inbox <span id="inbox_mailcount"></span><div class="clearfix"></div></a></li>
+                       
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="col-md-8 mailbox-content  tab-content tab-content-in">
+            <div class="tab-pane active text-style" id="tab1">
+                <div class="mailbox-border">
+                    
+                    @{ 
+                    var mail = ViewBag.mail;
+                    }
+                    <table id="inboxss" class="table tab-border">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Mail</th>
+                                <th></th>
+                                <th>Date</th>
+                               
+                            </tr>
+                        </thead>
+                        
+                        
+                        <tbody>
+
+
+
+                            @{
+                                foreach (var x in mail)
+                                {
+
+                                
+
+                                 <tr class="unread checked" id="@x.M_id">
+
+                                     <td class="hidden-xs"><p title="Delete"><button class="btn btn-danger btn-xs" onclick=removeMail("@x.M_id")><span class="glyphicon glyphicon-trash"></span></button></p></td>
+
+
+                                     @if (x.New == 1)
+                                     {
+                                        <td class="hidden-xs"  onclick=mailbox("@x.M_id")>
+                                            <i id="@x.M_id" class="fa fa-star icon-state-warning" > </i>
+                                        </td>
+                                     }
+                                     else
+                                     {
+                                        <td class="hidden-xs" onclick=mailbox("@x.M_id")>
+                                            <i id="@x.M_id" class="fa fa-star"> </i>
+                                        </td>
+                                      
+                                     }
+                                        <td class="hidden-xs">
+                                           @x.Name
+                                        </td>
+                                        <td class="hidden-xs">
+                                            @x.Message
+                                        </td>
+                                        <td class="hidden-xs"></td>
+                                        <td class="hidden-xs">
+                                            @x.Date
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+                       
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+           
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+
+<!--inner block end here-->
+
+<script>
+    $(document).ready(function () {
+        $('#inboxss').dataTable();
+    });
+    function removeMail(m_id) {
+
+        var d = { "m_id": m_id };
+
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            url: "/Admin/DeleteMailAjax",
+            data: d,
+            success: function (resp) {
+                if (resp.valid == true) {
+                    $('#' + m_id).hide();
+
+                    getOrderCount();//update count in side bar and msg in nav bar
+                }
+            },
+            error: function (e) {
+                alert("error");
+                //somethin went wrong
+            }
+        };
+        $.ajax(settings);//asynchronous
+        return false;
+    }
+
+    function makeRead(m_id) {
+
+        $("#" + m_id + " i").removeClass("fa fa-star icon-state-warning").addClass("fa fa-star");
+        //alert("Read " + m_id);
+        return false;
+    }
+
+    function makeUnreadRead(m_id) {
+        $("#" + m_id +" i").removeClass("fa fa-star").addClass("fa fa-star icon-state-warning");
+
+        //alert("Unread " + m_id)
+        return false;
+
+    }
+
+    function mailbox(m_id)
+    {
+        var classs = $("#" + m_id + " i").attr('class')
+        var value;
+        if (classs === "fa fa-star icon-state-warning") {
+            //make it read
+            $("#" + m_id + " i").removeClass("fa fa-star icon-state-warning").addClass("fa fa-star");
+            value = 0;
+        }
+        else if (classs === "fa fa-star") {
+            //make it unread
+            $("#" + m_id + " i").removeClass("fa fa-star").addClass("fa fa-star icon-state-warning");
+            value = 1;
+        }
+
+        
+        var d = { "status": value, "m_id": m_id };
+
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            url: "/Admin/UpdateMailStatusAjax",
+            data: d,
+            success: function (resp) {
+                if (resp.valid == true) {
+
+                    getOrderCount();//update count in side bar and mail in nav bar
+                }
+            },
+            error: function (e) {
+                alert("error");
+                //somethin went wrong
+            }
+        };
+        $.ajax(settings);//asynchronous
+        return false;
+    }
+
+</script>

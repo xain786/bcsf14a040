@@ -1,0 +1,202 @@
+﻿
+@{
+    ViewBag.Title = "About";
+   
+}
+
+    <!-- navigation -->
+    <div class="navigation">
+        <div class="container">
+            <nav class="navbar navbar-default">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header nav_2">
+                    <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/Home/Index" >Home</a></li>
+                        <!-- Mega Menu -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Products <b class="caret"></b></a>
+                            <ul class="dropdown-menu multi-column columns-3">
+                                <div class="row">
+                                    @foreach (var x in ViewBag.parent)
+                                    {
+                                        <div class="col-sm-3">
+                                            <ul class="multi-column-dropdown">
+                                                <h6>@x.Name</h6>
+                                                @foreach (var c in ViewBag.chlid)
+                                                {
+                                                    if (c.Parent == x.C_id)
+                                                    {
+                                                        if (c.T_id == 1)
+                                                        {
+                                                            <li><a href="/Home/Products/@c.C_id">@c.Name<span>New</span></a></li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li><a href="/Home/Products/@c.C_id">@c.Name</a></li>
+                                                        }
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                            </ul>
+                        </li>
+                        <li><a href="/Home/About" class="act">About Us</a></li>
+
+                        <li><a href="/Home/Mail">Mail Us</a></li>
+                        <li><a href="/Home/Cart">Cart <span class="glyphicon glyphicon-shopping-cart"></span></a></li>
+
+                        <li><a href="/Home/Checkout">Check Out <span class="glyphicon glyphicon-check" aria-hidden="true"></span></a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- //navigation -->
+    <!-- banner -->
+    <div class="banner banner10">
+        <div class="container">
+            <h2>About Us</h2>
+        </div>
+    </div>
+    <!-- //banner -->
+    <!-- breadcrumbs -->
+    <div class="breadcrumb_dress">
+        <div class="container">
+            <ul>
+                <li><a href=@Url.Content("~/Home/Index")><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a> <i>/</i></li>
+                <li>About Us</li>
+            </ul>
+        </div>
+    </div>
+    <!-- //breadcrumbs -->
+    <!-- about -->
+    <div class="about">
+        <div class="container">
+            <div class="w3ls_about_grids">
+                <div class="col-md-6 w3ls_about_grid_left">
+                    <p>
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                        cupidatat non proident, sunt in culpa qui officia deserunt mollit
+                        anim id est laborum.
+                    </p>
+                    <div class="col-xs-2 w3ls_about_grid_left1">
+                        <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-xs-10 w3ls_about_grid_left2">
+                        <p>
+                            Sunt in culpa qui officia deserunt mollit
+                            anim id est laborum.Duis aute irure dolor in reprehenderit in voluptate velit esse
+                            cillum dolore eu fugiat nulla pariatur.
+                        </p>
+                    </div>
+                    <div class="clearfix"> </div>
+                    <div class="col-xs-2 w3ls_about_grid_left1">
+                        <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-xs-10 w3ls_about_grid_left2">
+                        <p>
+                            Sunt in culpa qui officia deserunt mollit
+                            anim id est laborum.Duis aute irure dolor in reprehenderit in voluptate velit esse
+                            cillum dolore eu fugiat nulla pariatur.
+                        </p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="col-md-6 w3ls_about_grid_right">
+                    <img src="@Url.Content("~/Content/mytemplate/")images/User.png" style="width:350px;height:350px;" alt=" " class="img-responsive" />
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+    <!-- //about -->
+    <!-- team -->
+    <div class="team">
+        <div class="container">
+            <h3>Meet Our Team</h3>
+            <div class="wthree_team_grids">
+                <div class="col-md-3 wthree_team_grid">
+                    <img src="@Url.Content("~/Content/mytemplate/")images/User.png" style="width:160px;height:160px;" alt=" " class="img-responsive" />
+                    <h4>Smith Allen <span>Manager</span></h4>
+                    <div class="agileits_social_button">
+                        <ul>
+                            <li><a href="#" class="facebook"> </a></li>
+                            <li><a href="#" class="twitter"> </a></li>
+                            <li><a href="#" class="google"> </a></li>
+                            <li><a href="#" class="pinterest"> </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 wthree_team_grid">
+                    <img src="@Url.Content("~/Content/mytemplate/")images/User.png" style="width:160px;height:160px;" alt=" " class="img-responsive" />
+
+                    <h4>Laura James <span>Designer</span></h4>
+                    <div class="agileits_social_button">
+                        <ul>
+                            <li><a href="#" class="facebook"> </a></li>
+                            <li><a href="#" class="twitter"> </a></li>
+                            <li><a href="#" class="google"> </a></li>
+                            <li><a href="#" class="pinterest"> </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 wthree_team_grid">
+                    <img src="@Url.Content("~/Content/mytemplate/")images/User.png" style="width:160px;height:160px;" alt=" " class="img-responsive" />
+
+                    <h4>Crisp Doe <span>Director</span></h4>
+                    <div class="agileits_social_button">
+                        <ul>
+                            <li><a href="#" class="facebook"> </a></li>
+                            <li><a href="#" class="twitter"> </a></li>
+                            <li><a href="#" class="google"> </a></li>
+                            <li><a href="#" class="pinterest"> </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 wthree_team_grid">
+                    <img src="@Url.Content("~/Content/mytemplate/")images/User.png" style="width:160px;height:160px;" alt=" " class="img-responsive" />
+
+                    <h4>Linda Rosy <span>Quality Checker</span></h4>
+                    <div class="agileits_social_button">
+                        <ul>
+                            <li><a href="#" class="facebook"> </a></li>
+                            <li><a href="#" class="twitter"> </a></li>
+                            <li><a href="#" class="google"> </a></li>
+                            <li><a href="#" class="pinterest"> </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+                <p>
+                    Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis
+                    voluptatibus maiores alias consequatur aut perferendis doloribus asperiores
+                    repellat.
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- //team -->
+    <!-- team-bottom -->
+    <div class="team-bottom">
+        <div class="container">
+            <h3>Are You Ready For Deals? Flat <span>30% Offer </span>on Mobiles</h3>
+            <p>
+                Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis
+                voluptatibus maiores alias consequatur aut perferendis doloribus asperiores
+                repellat.
+            </p>
+            <a href="">Shop Now</a>
+        </div>
+    </div>
+    <!-- //team-bottom -->
+    

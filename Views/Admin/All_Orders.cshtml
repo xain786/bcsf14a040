@@ -1,0 +1,409 @@
+﻿@model IEnumerable<WebApplication1.Models.OrderView>
+@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_adminview.cshtml";
+}
+
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
+<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<!--inner block start here-->
+<div class="inner-block">
+    <div class="product-block">
+        <div class="pro-head" style="margin-top:0px">
+            <h2>@ViewBag.heading</h2>
+        </div>
+     
+                    <!--All Orders-->
+       <div class="table-responsive" style="padding-bottom: 300px">
+                        <table id="myTable" class="display table" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Order#</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Details</th>
+                                    <th>Grand Total</th>
+                                    <th>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                
+                                    @foreach (var x in Model)
+                                    {
+                                <tr id="@x.Order.O_id">
+                                    
+
+                                    <td>@x.Order.O_id</td>
+
+                                    <td>@x.Address.Name</td>
+
+                                    <td>@x.Address.Phone</td>
+                                    <td><button type="button" class="btn btn-info " onclick=AddressDetails("@x.Order.A_id")>See Details</button></td>
+                                    <td>@x.Order.Date</td>
+
+                                    @{ 
+                                            var cas = Convert.ToInt16(x.Order.S_id);
+
+                                            var o_id = x.Order.O_id;
+                                            switch (cas)
+                                            {
+                                                case 1:
+                                                <td>
+                                                    <select class="selectpicker" data-style="btn-info" onchange="UpdateStatus(this.value, '@x.Order.O_id')">
+                                                        <option value="1" selected >
+                                                            Pending
+                                                        </option>
+                                                        <option value="2">
+                                                            Delivered
+                                                        </option>
+                                                        <option value="3">
+                                                            Confirmed
+                                                        </option>
+                                                        <option value="4">
+                                                            Canceled
+                                                        </option>
+                                                        <option value="5">
+                                                            Returned
+                                                        </option>
+                                                        
+                                                    </select>
+                                                </td>
+                                                break;
+                                            case 2:
+                                                <td>
+                                                    <select class="selectpicker" data-style="btn-info" onchange="UpdateStatus(this.value, '@x.Order.O_id')">
+                                                        
+                                                        <option value="2" selected>
+                                                            Delivered
+                                                        </option>
+                                                        
+
+
+                                                    </select>
+                                                </td>
+                                                break;
+                                            case 3:
+                                                <td>
+                                                    <select class="selectpicker" data-style="btn-info" onchange="UpdateStatus(this.value, '@x.Order.O_id')">
+                                                        
+                                                        <option value="2" >
+                                                            Delivered
+                                                        </option>
+                                                        <option value="3" selected>
+                                                            Confirmed
+                                                        </option>
+                                                        <option value="4">
+                                                            Canceled
+                                                        </option>
+                                                        <option value="5">
+                                                            Returned
+                                                        </option>
+                                                      
+                                                    </select>
+                                                </td>
+                                                break;
+                                            case 4:
+                                                <td>
+                                                    <select class="selectpicker" data-style="btn-info" onchange="UpdateStatus(this.value, '@x.Order.O_id')">
+                                                        
+                                                        
+                                                        
+                                                        <option value="4" selected>
+                                                            Canceled
+                                                        </option>
+                                                        
+
+
+                                                    </select>
+                                                </td>
+                                                break;
+                                            case 5:
+                                                <td>
+                                                    <select class="selectpicker" data-style="btn-info" onchange="UpdateStatus(this.value, '@x.Order.O_id')">
+                                                        
+                                                        <option value="5" selected>
+                                                            Returned
+                                                        </option>
+                                                        
+                                                    </select>
+                                                </td>
+                                                break;
+                                            case 6:
+                                                <td>
+                                                    <select class="selectpicker" data-style="btn-info" onchange="UpdateStatus(this.value, '@x.Order.O_id')">
+
+                                                        <option value="6" selected>
+                                                            Removed
+                                                        </option>
+
+                                                    </select>
+                                                </td>
+                                                break;
+                                        }
+                                    }
+                                    
+
+                                    <td>
+                                        <button type="button" class="btn btn-info " onclick=orderDetails("@x.Order.O_id")>See Details</button>
+                                    </td>
+                                    @{
+                                        int GT = Convert.ToInt32(x.Order.Grand_total);
+                                    }
+                                    <td>@GT.ToString("#,##0")</td>
+
+                                    <td><p  title="Delete"><button class="btn btn-danger btn-xs" onclick=removeOrder("@x.Order.O_id") ><span  class="glyphicon glyphicon-trash"></span></button></p></td>
+                                </tr>
+
+                                        }
+                                    
+                            </tbody>
+                        </table>
+                    </div>
+
+       
+
+
+        <!-- Modal for address -->
+        <div class="modal fade" id="addressModel" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="AddressDetails" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Address</th>
+                                    <th>Reciver Name</th>
+                                    <th>CNIC</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td ><samp id="a"></samp></td>
+                                    <td ><samp id="b"></samp></td>
+                                    <td ><samp id="c"></samp></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+         <!--Model fro order details-->
+         <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Modal Header</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <table id="OrderDetails" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Descrption</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblBody"></tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="clearfix"> </div>
+        </div>
+</div>
+
+
+
+<!--inner block end here-->
+
+
+<script>
+$(document).ready(function(){
+    $('#myTable').dataTable();
+
+ });
+
+
+function AddressDetails(A_id) {
+
+        var d = { "A_id": A_id };
+
+        var settings = {
+        type: "POST",
+        dataType: "json",
+        url: "/Admin/AddressDetailsAjax",
+        data: d,
+        success: function (resp) {
+            if (resp.valid == true) {
+                $('#a').text(resp.address);
+                $('#b').text(resp.name);
+                $('#c').text(resp.cnic);
+
+                $('#addressModel').modal();
+            }
+        },
+        error: function (e) {
+          alert("error");
+          //somethin went wrong
+         }
+    };
+    $.ajax(settings);//asynchronous
+    return false;
+
+}
+
+
+//Display order Details in Model
+function orderDetails(o_id) {
+    var d = { "O_id": o_id };
+
+    var settings = {
+        type: "POST",
+        dataType: "json",
+        url: "/Admin/OrderDetailsAjax",
+        data: d,
+        success: function (resp) {
+           //console.log(resp);
+            if (resp.valid == true) {
+                resp.list =jQuery.parseJSON (resp.list);
+
+
+
+                /*$.each(resp.list, function (index, element) {
+                    try{
+                        alert(element.Product.P_id  +  "  " + element.Image.Image_name + " " + element.Order_details.Od_id);
+                    }
+                    catch(e)
+                    {
+                        console.log("yo " + e);
+                    }
+                });*/
+         
+                $("#tblBody").empty();
+                var source = $("#listtemplate").html();
+                var template = Handlebars.compile(source);
+
+                var html = template(resp);
+                $("#tblBody").append(html);
+
+                $('#myModal').modal();
+            }
+
+            
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert("error");
+            alert(xhr.status);
+            alert(thrownError);
+        }
+    };
+    $.ajax(settings);
+};
+</script>
+<script src="~/Scripts/handlebars.js"></script>
+<script id="listtemplate" type="text/x-handlebars-template">
+    {{#each list}}
+    <tr>
+        <td><img src="/UploadedFiles/{{Image.Image_name}}" style="width:100px;height:100px;" /></td>
+        <td>
+            <h4><a target="_blank" href="/Home/Single/?name={{Product.P_id}}">{{Product.Name}}</a></h4>
+            <p style="margin-top:-8px">Web ID: {{Product.P_id}}</p>
+        </td>
+        <td>
+            <p>{{Product.Price}}</p>
+        </td>
+        <td>
+            <p>{{Order_details.Quantity}}</p>
+        </td>
+        <td>
+            <p>{{Order_details.Price}}</p>
+        </td>
+    </tr>
+    {{/each}}
+
+</script>
+
+
+<script>
+    function UpdateStatus(value, o_id) {
+       // alert(value + " " + o_id);
+
+        var d = { "status": value, "o_id": o_id };
+
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            url: "/Admin/UpdateOrderStatusAjax",
+            data: d,
+            success: function (resp) {
+                if (resp.valid == true) {
+
+                    getOrderCount();//update count in side bar
+                }
+            },
+            error: function (e) {
+                alert("error");
+                //somethin went wrong
+            }
+        };
+        $.ajax(settings);//asynchronous
+        return false;
+
+    }
+
+    function removeOrder(o_id)
+    {
+        $('#' + o_id).hide();
+        var value = 6;
+        var d = { "status": value, "o_id": o_id };
+
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            url: "/Admin/UpdateOrderStatusAjax",
+            data: d,
+            success: function (resp) {
+                if (resp.valid == true) {
+
+                    getOrderCount();//update count in side bar
+                }
+            },
+            error: function (e) {
+                alert("error");
+                //somethin went wrong
+            }
+        };
+        $.ajax(settings);//asynchronous
+        return false;
+    }
+</script>

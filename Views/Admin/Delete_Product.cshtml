@@ -1,0 +1,245 @@
+﻿
+@{
+    ViewBag.Title = "Delete_Product";
+    Layout = "~/Views/Shared/_adminview.cshtml";
+}
+
+<div class="inner-block">
+    <div class="inbox">
+        <h2>Delete Product</h2>
+
+        <form class="form-horizontal" action='@Url.Content("~/Admin/Delete_Product")' method="post">
+            <!-- name-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="product_name">PRODUCT ID</label>
+                <div class="col-md-4">
+                    <input id="product_name" name="P_id" value="@TempData["pidAvailabilityAjax_ajax"]" placeholder="PRODUCT ID" class="form-control input-md" required="" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="singlebutton"></label>
+                <div class="col-md-4" style="padding-top:15px">
+                    <h4 style="text-align:center; color:red; padding-bottom:0px"> @TempData["v_searchProduct"]</h4>
+                    <button type="submit" name="button" value="search" class="btn btn-primary" style="padding-left:70px; padding-right:70px">Search</button>
+                </div>
+            </div>
+        </form>
+
+
+        @{
+            var p = ViewBag.proData;
+            var catagory = ViewBag.catagory;
+            var brand = ViewBag.brand;
+            var tag = ViewBag.tag;
+        }
+
+        <form class="form-horizontal" action='@Url.Content("~/Admin/Delete_Product")' method="post">
+
+            <!--hidden pid-->
+            <div class="form-group">
+                <div class="col-md-4">
+                    <input value="@p.P_id" id="product_name" name="P_id" placeholder="PRODUCT ID" class="form-control input-md" required="" type="hidden" >
+                </div>
+            </div>
+
+            <!-- name-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="product_name">PRODUCT NAME</label>
+                <div class="col-md-4">
+                    <input value="@p.Name" id="product_name" name="Name" placeholder="PRODUCT NAME" class="form-control input-md" required="" type="text" disabled>
+
+                </div>
+            </div>
+
+            <!-- description -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="product_description">PRODUCT DESCRIPTION</label>
+                <div class="col-md-4">
+                    <textarea class="form-control" name="Description" disabled>@p.Description</textarea>
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="product_description">PRODUCT Information</label>
+                <div class="col-md-4">
+                    <textarea class="form-control" name="Product_info" disabled>@p.Product_info</textarea>
+                </div>
+            </div>
+
+            <!-- quantity-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="available_quantity">AVAILABLE QUANTITY</label>
+                <div class="col-md-4">
+                    <input value="@p.Stock" id="available_quantity" name="Stock" placeholder="AVAILABLE QUANTITY" class="form-control input-md" required="" type="text" disabled>
+
+                </div>
+            </div>
+            <!-- PRICE-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="product_weight">Price</label>
+                <div class="col-md-4">
+                    <input value="@p.Price" id="product_weight" name="Price" placeholder="PRODUCT PRICE" class="form-control input-md" required="" type="text" disabled>
+
+                </div>
+            </div>
+
+            <!-- Text OLD PRICE-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="percentage_discount">OLD PRICE</label>
+                <div class="col-md-4">
+                    <input value="@p.Old_price" id="percentage_discount" name="Old_price" placeholder="OLD PRICE" class="form-control input-md" required="" type="text" disabled>
+
+                </div>
+            </div>
+
+            <!-- Select category -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="product_categorie">PRODUCT CATEGORY</label>
+                <div class="col-md-4">
+                    <select id="product_categorie" name="C_name" class="form-control" disabled>
+                        @{
+                            try
+                            {
+                                var main2 = ViewBag.category_list;
+                                foreach (var x in main2)
+                                {
+                                    if (@ViewBag.catagory == @x.Name)
+                                    {
+                                        <option selected>@x.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option>@x.Name</option>
+                                    }
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <!-- Select bRAND -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="product_categorie">PRODUCT BRAND</label>
+                <div class="col-md-4">
+                    <select id="product_categorie" name="B_name" class="form-control" disabled>
+                        @{
+                            try
+                            {
+                                var main3 = ViewBag.brand_list;
+                                foreach (var x in main3)
+                                {
+                                    if (@ViewBag.brand == @x.Name)
+                                    {
+                                        <option selected>@x.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option>@x.Name</option>
+                                    }
+                                }
+
+                            }
+                            catch (Exception e)
+                            {
+                            }
+                        }
+
+                    </select>
+                </div>
+            </div>
+
+            <label class="col-md-4 control-label" for="product_categorie">TAGS</label>
+            @{
+                int id = 0;
+
+                id = Convert.ToInt16(@ViewBag.tag);
+
+
+
+                switch (id)
+                {
+                    case 1:
+                        <div style="padding-left: 330px; padding-bottom:10px; padding-top:8px">
+                            <input type="radio" name="Tag" value="1" checked="checked" disabled> New
+                            <input type="radio" name="Tag" value="2" disabled> Sale
+                            <input type="radio" name="Tag" value="3" disabled> Imported
+                            <input type="radio" name="Tag" value="4" disabled> Regular
+                        </div>
+                        break;
+                    case 2:
+                        <div style="padding-left: 330px; padding-bottom:10px; padding-top:8px">
+                            <input type="radio" name="Tag" value="1" disabled> New
+                            <input type="radio" name="Tag" value="2" checked="checked" disabled> Sale
+                            <input type="radio" name="Tag" value="3" disabled> Imported
+                            <input type="radio" name="Tag" value="4" disabled> Regular
+                        </div>
+                        break;
+                    case 3:
+                        <div style="padding-left: 330px; padding-bottom:10px; padding-top:8px">
+                            <input type="radio" name="Tag" value="1" disabled> New
+                            <input type="radio" name="Tag" value="2" disabled> Sale
+                            <input type="radio" name="Tag" value="3" checked="checked" disabled> Imported
+                            <input type="radio" name="Tag" value="4" disabled> Regular
+                        </div>
+                        break;
+                    case 4:
+                        <div style="padding-left: 330px; padding-bottom:10px; padding-top:8px">
+                            <input type="radio" name="Tag" value="1" disabled> New
+                            <input type="radio" name="Tag" value="2" disabled> Sale
+                            <input type="radio" name="Tag" value="3" disabled> Imported
+                            <input type="radio" name="Tag" value="4" checked="checked" disabled> Regular
+                        </div>
+                        break;
+                    default:
+                        <div style="padding-left: 330px; padding-bottom:10px; padding-top:8px">
+                            <input type="radio" name="Tag" value="1" disabled> New
+                            <input type="radio" name="Tag" value="2" disabled> Sale
+                            <input type="radio" name="Tag" value="3" disabled> Imported
+                            <input type="radio" name="Tag" value="4" disabled> Regular
+                        </div>
+                        break;
+
+                }
+
+
+
+
+
+            }
+
+
+      
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="singlebutton"></label>
+                <div class="col-md-4">
+                    <h4 style="text-align:center; color:red; padding-bottom:15px"> @TempData["v_updateProduct"]</h4>
+                    <button value="delete" id="singlebutton" name="button" class="btn btn-primary" style="padding-left:70px; padding-right:70px">Delete PRODUCT</button>
+
+                </div>
+            </div>
+        </form>
+
+        
+        <script>
+
+    $(document).ready(function () {
+        $('#product_name').autocomplete({
+            source: '@Url.Action("SearchLive")'
+
+        });
+    });
+
+        </script>
+    </div>
+</div>
+
+
+
+
+

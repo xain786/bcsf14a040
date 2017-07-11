@@ -1,0 +1,198 @@
+﻿@model IEnumerable<WebApplication1.Models.CartView>
+@{
+    ViewBag.Title = "Cart";
+
+}
+<link href="~/Content/Paging.css" rel="stylesheet" />
+
+<!-- navigation -->
+<div class="navigation">
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header nav_2">
+                <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                <ul class="nav navbar-nav">
+                    <li><a href="/Home/Index">Home</a></li>
+                    <!-- Mega Menu -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Products <b class="caret"></b></a>
+                        <ul class="dropdown-menu multi-column columns-3">
+                            <div class="row">
+                                @foreach (var x in ViewBag.parent)
+                                {
+                                    <div class="col-sm-3">
+                                        <ul class="multi-column-dropdown">
+                                            <h6>@x.Name</h6>
+                                            @foreach (var c in ViewBag.chlid)
+                                            {
+                                                if (c.Parent == x.C_id)
+                                                {
+                                                    if (c.T_id == 1)
+                                                    {
+                                                        <li><a href="/Home/Products/@c.C_id">@c.Name<span>New</span></a></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li><a href="/Home/Products/@c.C_id">@c.Name</a></li>
+                                                    }
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                }
+                        </ul>
+                    </li>
+
+
+
+                    <li><a href="/Home/About">About Us</a></li>
+
+                    <li><a href="/Home/Mail">Mail Us</a></li>
+                    <li><a href="/Home/Cart" class="act">Cart <span class="glyphicon glyphicon-shopping-cart"></span></a></li>
+
+                    <li><a href="/Home/Checkout" >Check Out <span class="glyphicon glyphicon-check" aria-hidden="true"></span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- //navigation -->
+
+
+
+
+<section id="cart_items" style="padding-bottom:400px">
+
+
+    <div class="container">
+
+        <div class="review-payment">
+            <h2>Review & Payment</h2>
+        </div>
+
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed table-striped" id="mytable">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="image" style="color: #fff">Item</td>
+                        <td class="description" style="color: #fff">Description</td>
+                        <td class="price" style="color: #fff">Price</td>
+                        <td class="quantity" style="color: #fff">Quantity</td>
+                        <td class="total" style="color: #fff">Total</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ 
+                        foreach (var x in Model)
+                        {
+                            int total =(int) x.Product.Price * (int)x.Cart.Quantity;
+                            int price =(int)x.Product.Price;
+                            int cid = x.Cart.Cart_id;
+                    <tr class="@cid">
+                        <td class="cart_product">
+                            <a href=""><img src="~/UploadedFiles/@x.Image.Image_name" alt="" height="82" width="67" style="margin-left:-30px; margin-top:-18px"></a>
+                        </td>
+                        <td class="cart_description">
+                            <h4><a href="/Home/Single/?name=@x.Product.P_id">@x.Product.Name</a></h4>
+                            <p>Web ID: @x.Product.P_id</p>
+                        </td>
+                        <td class="cart_price">
+                            <p>Rs @price.ToString("#,##0")</p>
+                        </td>
+                        <td >
+                            <div class="color-quality-right" style="margin-left:0px">
+                                <div class="quantity">
+                                    <div class="quantity-select">
+                                        <div class="entry value-minus1" onclick=updatequantity("@cid","dec")>&nbsp;</div>
+                                        <div class="entry value1" id="single_Quantity" ><span >@x.Cart.Quantity</span></div>
+                                        <div class="entry value-plus1 active"onclick=updatequantity("@cid","inc")>&nbsp;</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        
+                        <td class="cart_total">
+                            <p class="cart_total_price" id="@cid@cid">Rs. @total.ToString("#,##0")</p>
+                        </td>
+                        <td class="cart_delete">
+                            <a class="cart_quantity_delete"  onclick=deleteFromCart("@cid")><i class="fa fa-times"></i></a>
+                        </td>
+                    </tr>
+                        }
+
+                        if (Model.Count() == 0)
+                        {
+
+                            <tr>
+                                <td >
+                                    -----------------------
+                                </td>
+                                <td >
+                                    -----------------------
+                                </td>
+                                <td>
+                                    -----------------------
+                                </td>
+                                <td>
+                                    -----------------------
+                                </td>
+
+                                <td>
+                                    -----------------------
+                                </td>
+                               
+                            </tr>
+
+
+                        }
+
+
+
+
+                    }
+
+                    <tr></tr>
+                </tbody>
+            </table>
+            <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+
+            <script src="~/Scripts/paging.js"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#mytable').paging({limit:4});
+                });
+            </script>
+        </div>
+
+    </div>
+
+
+</section>
+
+   <!--quantity-->
+<script>
+
+  
+
+
+								$('.value-plus1').on('click', function(){
+									var divUpd = $(this).parent().find('.value1'), newVal = parseInt(divUpd.text(), 10)+1;
+									divUpd.text(newVal);
+								});
+
+								$('.value-minus1').on('click', function(){
+									var divUpd = $(this).parent().find('.value1'), newVal = parseInt(divUpd.text(), 10)-1;
+									if(newVal>=1) divUpd.text(newVal);
+								});
+</script>
+<!--quantity-->
+

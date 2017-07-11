@@ -1,0 +1,336 @@
+﻿@{
+    ViewBag.Title = "Admin Index";
+    Layout = "~/Views/Shared/_adminview.cshtml";
+}
+
+                <!--inner block start here-->
+                <div class="inner-block">
+                    <!--market updates updates-->
+                    <div class="market-updates">
+                        <div class="col-md-4 market-update-gd">
+                            <div class="market-update-block clr-block-1">
+                                <div class="col-md-8 market-update-left">
+                                    <h3 id="reg"></h3>
+                                    <h4>Registered User</h4>
+                                    <p>Other hand, we denounce</p>
+                                </div>
+                                <div class="col-md-4 market-update-right">
+                                    <i class="fa fa-file-text-o"> </i>
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 market-update-gd">
+                            <div class="market-update-block clr-block-2">
+                                <div class="col-md-8 market-update-left">
+                                    <h3 id="follow"></h3>
+                                    <h4>Followers</h4>
+                                    <p>Other hand, we denounce</p>
+                                </div>
+                                <div class="col-md-4 market-update-right">
+                                    <i class="fa fa-eye"> </i>
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 market-update-gd">
+                            <div class="market-update-block clr-block-3">
+                                <div class="col-md-8 market-update-left">
+                                    <h3 id="newMess"></h3>
+                                    <h4>New Messages</h4>
+                                    <p>Other hand, we denounce</p>
+                                </div>
+                                <div class="col-md-4 market-update-right">
+                                    <i class="fa fa-envelope-o"> </i>
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <!--market updates end here-->
+                    <!--mainpage chit-chating-->
+                    <div class="chit-chat-layer1">
+                        <div class="col-md-12 chit-chat-layer1-left">
+                            <div class="work-progres">
+                                <div class="chit-chat-heading">
+                                    Recent Followers
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Project</th>
+                                                <th>Manager</th>
+
+                                                <th>Status</th>
+                                                <th>Progress</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Face book</td>
+                                                <td>Malorum</td>
+
+                                                <td><span class="label label-danger">in progress</span></td>
+                                                <td><span class="badge badge-info">50%</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Twitter</td>
+                                                <td>Evan</td>
+
+                                                <td><span class="label label-success">completed</span></td>
+                                                <td><span class="badge badge-success">100%</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Google</td>
+                                                <td>John</td>
+
+                                                <td><span class="label label-warning">in progress</span></td>
+                                                <td><span class="badge badge-warning">75%</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>LinkedIn</td>
+                                                <td>Danial</td>
+
+                                                <td><span class="label label-info">in progress</span></td>
+                                                <td><span class="badge badge-info">65%</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td>Tumblr</td>
+                                                <td>David</td>
+
+                                                <td><span class="label label-warning">in progress</span></td>
+                                                <td><span class="badge badge-danger">95%</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>6</td>
+                                                <td>Tesla</td>
+                                                <td>Mickey</td>
+
+                                                <td><span class="label label-info">in progress</span></td>
+                                                <td><span class="badge badge-success">95%</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <!--main page chit chating end here-->
+                   
+                    <div class="chart-layer-2">
+
+                        <div class="col-md-12 chart-layer2-right">
+                            <div class="prograc-blocks">
+                                <!--Progress bars-->
+                                <div class="home-progres-main">
+                                    <h3>Current Month Stats</h3>
+                                </div>
+                                <div class='bar_group'>
+                                    <div class='bar_group__bar thin' label='Sale' id="sale" show_values='true' tooltip='true' value='@ViewBag.CurrentMonthsale'></div>
+                                    <div class='bar_group__bar thin' label='Orders' id="orders" show_values='true' tooltip='true' value='@ViewBag.CurrentMonthOrders'></div>
+                                    <div class='bar_group__bar thin' label='Profit' id="profit" show_values='true' tooltip='true' value='@ViewBag.CurrentMonthProfit'></div>
+                                    <div class='bar_group__bar thin' label='Loss' id="loss" show_values='true' tooltip='true' value='@ViewBag.CurrentMohthloss'></div>
+                                </div>
+                                <script src="@Url.Content("~/Content/myadmin/")js/bars.js"></script>
+
+                                <!--//Progress bars-->
+                            </div>
+                        </div>
+                     
+                        <div class="clearfix"> </div>
+                    </div>
+
+                    <!--climate start here-->
+                    <div class="climate">
+                        <div class="col-md-4 climate-grids">
+                            <div class="climate-grid1">
+                                <div class="climate-gd1-top">
+                                    <div class="col-md-6 climate-gd1top-left">
+                                        <h4>@DateTime.Now.ToString("dd/MM/yyyy")</h4>
+                                        <h3>@DateTime.Now.ToString("h:mm")<span class="timein-pms">@DateTime.Now.ToString("tt")</span></h3>
+                                        <p>Humidity:</p>
+                                        <p>Sunset:</p>
+                                        <p>Sunrise:</p>
+                                    </div>
+                                    <div class="col-md-6 climate-gd1top-right">
+                                        <span class="clime-icon">
+                                            <figure class="icons">
+                                                <canvas id="partly-cloudy-day" width="64" height="64"></canvas>
+                                            </figure>
+                                            <script>
+							 var icons = new Skycons({"color": "#fff"}),
+								  list  = [
+									"clear-night", "partly-cloudy-day",
+									"partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+									"fog"
+								  ],
+								  i;
+
+							  for(i = list.length; i--; )
+								icons.set(list[i], list[i]);
+
+							  icons.play();
+                                            </script>
+                                        </span>
+                                        <p>88%</p>
+                                        <p>5:40PM</p>
+                                        <p>6:30AM</p>
+                                    </div>
+                                    <div class="clearfix"> </div>
+                                </div>
+                                <div class="climate-gd1-bottom">
+                                    <div class="col-md-4 cloudy1">
+                                        <h4>Hongkong</h4>
+                                        <figure class="icons">
+                                            <canvas id="sleet" width="58" height="58"></canvas>
+                                        </figure>
+                                        <script>
+								 var icons = new Skycons({"color": "#fff"}),
+									  list  = [
+										"clear-night", "clear-day",
+										"partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+										"fog"
+									  ],
+									  i;
+
+								  for(i = list.length; i--; )
+									icons.set(list[i], list[i]);
+
+								  icons.play();
+                                        </script>
+                                        <h3>10c</h3>
+                                    </div>
+                                    <div class="col-md-4 cloudy1">
+                                        <h4>UK</h4>
+                                        <figure class="icons">
+                                            <canvas id="cloudy" width="58" height="58"></canvas>
+                                        </figure>
+                                        <script>
+							 var icons = new Skycons({"color": "#fff"}),
+								  list  = [
+									"clear-night", "cloudy",
+									"partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+									"fog"
+								  ],
+								  i;
+
+							  for(i = list.length; i--; )
+								icons.set(list[i], list[i]);
+
+							  icons.play();
+                                        </script>
+                                        <h3>6c</h3>
+                                    </div>
+                                    <div class="col-md-4 cloudy1">
+                                        <h4>USA</h4>
+                                        <figure class="icons">
+                                            <canvas id="snow" width="58" height="58"></canvas>
+                                        </figure>
+                                        <script>
+							 var icons = new Skycons({"color": "#fff"}),
+								  list  = [
+									"clear-night", "clear-day",
+									"partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+									"fog"
+								  ],
+								  i;
+
+							  for(i = list.length; i--; )
+								icons.set(list[i], list[i]);
+
+							  icons.play();
+                                        </script>
+                                        <h3>10c</h3>
+                                    </div>
+                                    <div class="clearfix"> </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 climate-grids">
+                            <div class="climate-grid2">
+                                <span class="shoppy-rate"><h4>$180</h4></span>
+                                <ul>
+                                    <li> <i class="fa fa-credit-card"> </i> </li>
+                                    <li> <i class="fa fa-usd"> </i> </li>
+                                </ul>
+                            </div>
+                            <div class="shoppy">
+                                <h3>Those Who Hate Shopping?</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-4 climate-grids">
+                            <div class="climate-grid3">
+                                <div class="popular-brand">
+                                    <div class="col-md-6 popular-bran-left">
+                                        <h3>Popular</h3>
+                                        <h4>Brand of this month</h4>
+                                        <p> Duis aute irure  in reprehenderit.</p>
+                                    </div>
+                                    <div class="col-md-6 popular-bran-right">
+                                        <h3>Polo</h3>
+                                    </div>
+                                    <div class="clearfix"> </div>
+                                </div>
+                                <div class="popular-follow">
+                                    <div class="col-md-6 popular-follo-left">
+                                        <p>Lorem ipsum dolor sit amet, adipiscing elit.</p>
+                                    </div>
+                                    <div class="col-md-6 popular-follo-right">
+                                        <h4>Follower</h4>
+                                        <h5>2892</h5>
+                                    </div>
+                                    <div class="clearfix"> </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <!--climate end here-->
+                </div>
+                <!--inner block end here-->
+          
+<script>
+    $(document).ready(function () {
+        var d = null;
+
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            url: "/Admin/GetIndexDataAjax",
+            data: d,
+            success: function (resp) {
+                if (resp.valid == true) {
+                    //console.log(resp.mail);
+                    //side bar orders
+                    $("#reg").text(resp.regUser);
+                    $("#follow").text(resp.followers);
+                    $("#newMess").text(resp.newMessage);
+
+                   /* $("#sale").val(resp.CurrentMonthsale);
+                    $("#orders").val(resp.CurrentMonthOrders);
+                    $("#profit").val(resp.CurrentMonthProfit);
+                    $("#loss").val(resp.CurrentMohthloss);*/
+                  
+                }
+            },
+            error: function (e) {
+                alert("errorrrr");
+                //somethin went wrong
+            }
+        };
+
+        $.ajax(settings);//asynchronous
+
+        return false;
+
+    });
+</script>    

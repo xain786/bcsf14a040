@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewBag.Title = "Add_Product";
+    Layout = "~/Views/Shared/_adminview.cshtml";
+}
+
+<script src="~/Scripts/bootstrap-wysihtml5.js"></script>
+<script src="~/Scripts/wysihtml5-0.3.0.js"></script>
+<link href="~/Content/bootstrap-wysihtml5.css" rel="stylesheet" />
+<div class="inner-block">
+    <div class="inbox">
+        <h2>Add Product</h2>
+        <h4 style="text-align:center; color:red; padding-bottom:0px; padding-top:-20px; font:cursive"> @TempData["v_addProduct"]</h4>
+       
+        
+         <form class="form-horizontal" action='@Url.Content("~/Admin/Add_Product")' method="post" enctype="multipart/form-data">
+            <fieldset>
+                <!-- Form Name -->
+                <legend></legend>
+                <!-- id-->
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_id">PRODUCT ID</label>
+                    <div class="col-md-4">
+                        <input id="product_id" name="P_id" placeholder="PRODUCT ID" class="form-control input-md" required="" type="text">
+                    </div>
+                </div>
+                <h4 style="text-align:center; color:red; padding-right:330px; padding-left: 60px; padding-bottom:10px; padding-top:0px; font:caption" id="pid_output"> </h4>
+                <!-- name-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_name">PRODUCT NAME</label>
+                    <div class="col-md-4">
+                        <input id="product_name" name="Name" placeholder="PRODUCT NAME" class="form-control input-md" required="" type="text">
+
+                    </div>
+                </div>
+                
+                <!-- description -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_description">PRODUCT DESCRIPTION</label>
+                    <div class="col-md-6">
+                        <textarea class="form-control" name="Description" ></textarea>
+                    </div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_description">PRODUCT Information</label>
+                    <div class="col-md-6">
+                        <textarea class="form-control" name="Product_info"></textarea>
+                    </div>
+                </div>
+
+                <!-- quantity-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="available_quantity">AVAILABLE QUANTITY</label>
+                    <div class="col-md-4">
+                        <input id="available_quantity" name="Stock" placeholder="AVAILABLE QUANTITY" class="form-control input-md" required="" type="number">
+
+                    </div>
+                </div>
+                <!-- PRICE-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_weight" >Price</label>
+                    <div class="col-md-4">
+                        <input id="product_weight" name="Price" placeholder="PRODUCT PRICE" class="form-control input-md" required="" type="number">
+
+                    </div>
+                </div>
+
+                <!-- Text OLD PRICE-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="percentage_discount">OLD PRICE</label>
+                    <div class="col-md-4">
+                        <input id="percentage_discount" name="Old_price" placeholder="OLD PRICE" class="form-control input-md" required="" type="number">
+
+                    </div>
+                </div>
+
+                <!-- Select category -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_categorie">PRODUCT CATEGORY</label>
+                    <div class="col-md-4">
+                        <select id="product_categorie" name="C_name" class="form-control">
+                            @{
+                                try
+                                {
+                                    var main2 = ViewBag.category_list;
+                                    foreach (var x in main2)
+                                    {
+                                    <option>@x.Name</option>
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Select bRAND -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_categorie">PRODUCT BRAND</label>
+                    <div class="col-md-4">
+                        <select id="product_categorie" name="B_name" class="form-control">
+                            @{
+                                try
+                                {
+                                    var main3 = ViewBag.brand_list;
+                                    foreach (var x in main3)
+                                    {
+                                        <option>@x.Name</option>
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                }
+                            }
+
+                        </select>
+                    </div>
+                </div>
+                <label class="col-md-4 control-label" for="product_categorie">TAGS</label>
+                <div style="padding-left: 450px; padding-bottom:10px; padding-top:8px" >
+                    <input type="radio" name="Tag" value="1"> New
+                    <input type="radio" name="Tag" value="2"> Sale
+                    <input type="radio" name="Tag" value="3"> Imported
+                    <input type="radio" name="Tag" value="4" checked="checked" > Regular
+                </div>
+
+                <!-- File Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="filebutton">Main Image</label>
+                    <div class="col-md-4">
+                        <input id="filebutton" name="Main_Image" class="input-file" type="file">
+                    </div>
+                </div>
+                <!-- File Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="filebutton">Sub Image</label>
+                    <div class="col-md-4">
+                        <input id="filebutton" name="Sub_Image" class="input-file" type="file" multiple>
+                    </div>
+                </div>
+            
+                        <!-- Button -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="singlebutton"></label>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary" style="padding-left:70px; padding-right:70px">ADD PRODUCT</button>
+                            </div>
+                        </div>
+            </fieldset>
+      </form>
+        <script src="//cdn.ckeditor.com/4.7.0/standard/ckeditor.js"></script>
+        <script>
+            CKEDITOR.replace('Description');
+            CKEDITOR.replace('Product_info');
+
+        </script>
+</div>
+</div>

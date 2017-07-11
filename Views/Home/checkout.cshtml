@@ -1,0 +1,664 @@
+﻿@model IEnumerable<WebApplication1.Models.CartView>
+@{
+    ViewBag.Title = "Check Out";
+}
+
+
+<!-- navigation -->
+<div class="navigation">
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header nav_2">
+                <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                <ul class="nav navbar-nav">
+                    <li><a href="/Home/Index">Home</a></li>
+                    <!-- Mega Menu -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Products <b class="caret"></b></a>
+                        <ul class="dropdown-menu multi-column columns-3">
+                            <div class="row">
+                       
+                                         @foreach (var x in ViewBag.parent)
+                                         {
+                                    <div class="col-sm-3">
+                                        <ul class="multi-column-dropdown">
+                                            <h6>@x.Name</h6>
+                                            @foreach (var c in ViewBag.chlid)
+                                            {
+                                                if (c.Parent == x.C_id)
+                                                {
+                                                    if (c.T_id == 1)
+                                                    {
+                                                        <li><a href="/Home/Products/@c.C_id">@c.Name<span>New</span></a></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li><a href="/Home/Products/@c.C_id">@c.Name</a></li>
+                                                    }
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                         }
+                                         
+                           
+                        </ul>
+                    </li>
+                    <li><a href="/Home/About">About Us</a></li>
+
+                    <li><a href="/Home/Mail">Mail Us</a></li>
+                    <li><a href="/Home/Cart" >Cart <span class="glyphicon glyphicon-shopping-cart"></span></a></li>
+
+                    <li><a href="/Home/Checkout" class="act">Check Out <span class="glyphicon glyphicon-check" aria-hidden="true"></span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- //navigation -->
+
+
+
+    <div class="additional_info">
+        <div class="container">
+            <div class="sap_tabs">
+                <div id="horizontalTab1" style="display: block; width: 100%; margin: 0px;">
+                    <ul>
+                        <li class="resp-tab-item" aria-controls="tab_item-0" role="tab" style="pointer-events:none; "><span>Bill Details</span></li>
+                        <li class="resp-tab-item" aria-controls="tab_item-1" role="tab"  style="pointer-events:none; " ><span>Shipment Details</span></li>
+                        <li class="resp-tab-item" aria-controls="tab_item-2" role="tab" style="pointer-events:none; "><span>Payment Method</span></li>
+
+                    </ul>
+                    <div class="tab-1 resp-tab-content additional_info_grid" aria-labelledby="tab_item-0">
+                       
+                       
+
+
+                        <div class="row">
+                            <div class="well col-xs-10 col-sm-10 col-md-7 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-6 col-md-6">
+                                        <address>
+                                            <strong>Electronic Store</strong>
+                                            <br>
+                                            Kalma Chonk
+                                            <br>
+                                            Lahore Pakistan
+                                            <br>
+                                            <abbr title="Phone">Phone:</abbr> 0345-4678744
+                                        </address>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                                        <p>
+                                            <em>Date: @DateTime.Now</em>
+                                        </p>
+                                        <p>
+                                            <em>Receipt #: 34522677W</em>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="text-center">
+                                        <h1>Receipt  </h1>
+                                    </div>
+                                    <div style="padding-left:520px">
+                                    <a style="background: #3c43a4;" href="@Url.Content("~/Home/Cart")" class="btn btn-primary">Edit Cart</a>
+                                    </div>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Qantity</th>
+                                                <th class="text-center">Price</th>
+                                                <th class="text-center">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        
+                                        @{    
+                                            double subtotal = 0;
+                                            foreach (var x in Model)
+                                            {
+                                                int total = (int)@x.Product.Price * (int)@x.Cart.Quantity;
+                                                subtotal = subtotal + total;
+                                                int price = (int)x.Product.Price;
+                                            <tr>
+                                                <td class="col-md-6"><em>@x.Product.Name</em></td>
+                                                <td class="col-md-1" style="text-align: center"> @x.Cart.Quantity </td>
+                                                <td class="col-md-2 text-center">Rs. @price.ToString("#,##0")</td>
+                                                <td class="col-md-3 text-center">Rs. @total.ToString("#,##0")</td>
+                                            </tr>
+                                            }
+                                            double tax = subtotal * 0.05;
+                                            double grandtotal = subtotal + tax + 250;
+                                            }
+
+
+
+                                            <tr>
+                                                <td>   </td>
+                                                <td>   </td>
+                                                <td class="text-right">
+                                                    <p>
+                                                        <strong>Subtotal: </strong>
+                                                    </p>
+                                                    <p>
+                                                        <strong>Tax: </strong>
+                                                    </p>
+                                                    <p>
+                                                        <strong>Shiping: </strong>
+                                                    </p>
+                                                </td>
+                                                <td class="text-center">
+                                                    <p>
+                                                        <strong>Rs. @subtotal.ToString("#,##0")</strong>
+                                                    </p>
+                                                    <p>
+                                                        <strong>Rs. @tax.ToString("#,##0")</strong>
+                                                    </p>
+                                                    <p>
+                                                        <strong>Rs. 250</strong>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>   </td>
+                                                <td>   </td>
+                                                <td class="text-right"><h4><strong>Total: </strong></h4></td>
+                                               
+                                                <td class="text-center text-danger"><h4 style="background-color: #FFFF00; font:icon"><strong>Rs. @grandtotal.ToString("#,##0")</strong></h4></td>
+                                                    
+                                                
+                                             </tr>
+                                        </tbody>
+                                    </table>
+                                    <button style="background: #3c43a4;" type="button" class="btn btn-primary btn-lg btn-block"  aria-controls="tab_item-1" role="tab" >
+                                        Procced To Next Step    <span class="glyphicon glyphicon-chevron-right"></span>
+                                    </button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        </div>
+
+                    <div class="tab-2 resp-tab-content additional_info_grid" aria-labelledby="tab_item-1">
+                        
+                        
+                        <div class="container">
+
+                            <form  style="margin-left:-45px; margin-right:50px;" class="well form-horizontal"  id="contact_form">
+                                <fieldset>
+
+                                    <!-- Form Name -->
+                                    <legend>Contact Us Today!</legend>
+
+                                    <!-- Text input-->
+                                    @{ 
+                                        if (ViewBag.addres != null)
+                                        {
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Name</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group has-danger">
+                                                <span class="input-group-addon "><i class="glyphicon glyphicon-user"></i></span>
+                                                <input name="first_name" id="first_name" placeholder="Name" class="form-control form-control-danger" type="text" value="@ViewBag.addres.Name" required ="">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Text input-->
+
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Phone #</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                                                <input name="phone" id="phone" placeholder="Phone" class="form-control" type="text" value="@ViewBag.addres.Phone" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Text area -->
+
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Complete Address</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                                <textarea class="form-control" name="comment" id="address" placeholder="Address"  required>@ViewBag.add</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Text input-->
+
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">City</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                                <input name="city" placeholder="city" id="city" class="form-control" type="text" value="@ViewBag.addres.City" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Select Basic -->
+
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">State</label>
+                                        <div class="col-md-4 selectContainer">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-list" required></i></span>
+                                                <select name="state" id="state" class="form-control selectpicker">
+                                                    <option selected disabled>Please select your state</option>
+                                                    <option selected>Punjab</option>
+                                                    <option>Sindh</option>
+                                                    <option>Blochistan </option>
+                                                    <option>KPK</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Text input-->
+
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Zip Code</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                                <input name="zip" id="zip" placeholder="Zip Code" class="form-control" type="text" value="@ViewBag.addres.Zip" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label"></label>
+                                        <div class="col-md-4">
+
+
+                                            <button onclick=shipingDetails() style="background: #3c43a4;" type="button" class="btn btn-primary btn-lg btn-block">
+                                                Use Address    <span class="glyphicon glyphicon-refresh"></span>
+                                            </button>
+                                            <button style="background: #3c43a4;" type="button" class="btn btn-primary btn-lg btn-block" aria-controls="tab_item-0" role="tab">
+                                                Procced To Previous Step    <span class="glyphicon glyphicon-chevron-left"></span>
+                                            </button>
+                                            <button id="shiping_btn" style="background: #3c43a4;" type="button" class="btn btn-primary btn-lg btn-block" aria-controls="tab_item-2" role="tab" disabled>
+                                                Procced To Next Step    <span class="glyphicon glyphicon-chevron-right"></span>
+                                            </button>
+
+                                        </div>
+                                    </div>
+
+
+
+                                        }
+                                        else
+                                        {
+
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Name</label>
+                                                <div class="col-md-4 inputGroupContainer">
+                                                    <div class="input-group has-danger">
+                                                        <span class="input-group-addon "><i class="glyphicon glyphicon-user"></i></span>
+                                                        <input name="first_name" id="first_name" placeholder="Name" class="form-control form-control-danger" type="text"  required>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                    <!-- Text input-->
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Phone #</label>
+                                                <div class="col-md-4 inputGroupContainer">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                                                        <input name="phone" id="phone" placeholder="Phone" class="form-control" type="text"  required>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                    <!-- Text area -->
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Complete Address</label>
+                                                <div class="col-md-4 inputGroupContainer">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                                        <textarea class="form-control" name="comment" id="address" placeholder="Address" required></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                    <!-- Text input-->
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">City</label>
+                                                <div class="col-md-4 inputGroupContainer">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                                        <input name="city" placeholder="city" id="city" class="form-control" type="text" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                    <!-- Select Basic -->
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">State</label>
+                                                <div class="col-md-4 selectContainer">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-list" required></i></span>
+                                                        <select name="state" id="state" class="form-control selectpicker">
+                                                            <option selected disabled>Please select your state</option>
+                                                            <option>Punjab</option>
+                                                            <option>Sindh</option>
+                                                            <option>Blochistan </option>
+                                                            <option>KPK</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                    <!-- Text input-->
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Zip Code</label>
+                                                <div class="col-md-4 inputGroupContainer">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                                        <input name="zip" id="zip" placeholder="Zip Code" class="form-control" type="text"  required>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label"></label>
+                                                <div class="col-md-4">
+
+
+                                                    <button onclick=shipingDetails() style="background: #3c43a4;" type="button" class="btn btn-primary btn-lg btn-block">
+                                                        Add Address    <span class="glyphicon glyphicon-plus"></span>
+                                                    </button>
+                                                    <button style="background: #3c43a4;" type="button" class="btn btn-primary btn-lg btn-block" aria-controls="tab_item-0" role="tab">
+                                                        Procced To Previous Step    <span class="glyphicon glyphicon-chevron-left"></span>
+                                                    </button>
+                                                    <button id="shiping_btn" style="background: #3c43a4;" type="button" class="btn btn-primary btn-lg btn-block" aria-controls="tab_item-2" role="tab" disabled>
+                                                        Procced To Next Step    <span class="glyphicon glyphicon-chevron-right"></span>
+                                                    </button>
+
+                                                </div>
+                                            </div>
+
+                                        }
+                                    }
+                                    <!-- Success message -->
+                                    <div class="alert alert-success" role="alert" id="success_message" style="display: none;">Success <i class="glyphicon glyphicon-thumbs-up"></i> Thanks for contacting us, we will get back to you shortly.</div>
+
+                                    <!-- Button -->
+                                    
+
+                                </fieldset>
+                            </form>
+                    </div><!-- /.container -->
+                      
+                    </div>
+
+
+
+                    <div class="tab-2 resp-tab-content additional_info_grid" aria-labelledby="tab_item-2">
+                      
+     
+                        <div class="container">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#home">Cash On Delivery</a></li>
+                                <li><a data-toggle="tab" href="#menu1" style="pointer-events:none; ">Pay Now</a></li>
+                                
+                            </ul>
+
+                            <div class="tab-content">
+
+                                <div id="home" class="tab-pane fade in active">
+                                    <div class="container">
+
+                                        <form style="margin-left:-60px; margin-right:65px;" class="well form-horizontal" id="contact_form2">
+                                            <fieldset>
+
+                                                <!-- Form Name -->
+                                                <legend>For Secure Delivery!</legend>
+
+                                                <!-- Text input-->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label">Name</label>
+                                                    <div class="col-md-4 inputGroupContainer">
+                                                        <div class="input-group has-danger">
+                                                            <span class="input-group-addon "><i class="glyphicon glyphicon-user"></i></span>
+                                                            <input onkeyup=completeAddress() name="name" id="name2" placeholder="Name" class="form-control form-control-danger" type="text" required>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Text input-->
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label">CNIC #</label>
+                                                    <div class="col-md-4 inputGroupContainer">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                                                            <input onkeyup=completeAddress() name="cnic" id="cnic" placeholder="CNIC" class="form-control" type="text" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="g-recaptcha" data-sitekey="6Ldx_iQUAAAAAGo-9Ciu63t5oBQ1iHVUFegi9WE0" style="padding-left:380px; padding-bottom:15px"></div>
+
+
+                                                <h4 id="c_output" style="text-align:center; color:red; padding-bottom:7px; padding-top:5px"></h4>
+                                             
+                                                
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label"></label>
+                                                    <div class="col-md-4">
+                                                        
+
+                                                       
+                                                        <button style="background: #3c43a4;" type="button" class="btn btn-primary btn-lg btn-block" aria-controls="tab_item-1" role="tab">
+                                                            Procced To Previous Step    <span class="glyphicon glyphicon-chevron-left"></span>
+                                                        </button>
+                                                        
+                                                        <div id="loader" style="text-align:center; color:red; padding-bottom:7px; padding-top:5px; display:none">
+
+                                                            <img src="@Url.Content("~/Content/mytemplate/")images/ajax-loader.gif" alt="loading" />
+                                                        </div>
+
+                                                        <button onclick=PlaceOrder() id="reciver_btn" style="background: #3c43a4;" type="button" class="btn btn-primary btn-lg btn-block" aria-controls="tab_item-2" role="tab" disabled>
+                                                            Place Order    <span class="glyphicon glyphicon-pushpin"></span>
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+
+                                            </fieldset>
+                                        </form>
+                                    </div><!-- /.container -->
+
+                                </div>
+
+
+                            
+
+                            
+
+
+
+                                    <div id="menu1" class="tab-pane fade">
+
+                                        <div class="container">
+                                            <div class='row'>
+                                                <div class='col-md-4'></div>
+                                                <div class='col-md-4'>
+                                                    <script src='https://js.stripe.com/v2/' type='text/javascript'></script>
+                                                    <form accept-charset="UTF-8" action="/" class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="pk_bQQaTxnaZlzv4FnnuZ28LFHccVSaj" id="payment-form" method="post">
+                                                        <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="_method" type="hidden" value="PUT" /><input name="authenticity_token" type="hidden" value="qLZ9cScer7ZxqulsUWazw4x3cSEzv899SP/7ThPCOV8=" /></div>
+                                                        <div class='form-row'>
+                                                            <div class='col-xs-12 form-group required'>
+                                                                <label class='control-label'>Name on Card</label>
+                                                                <input class='form-control' size='4' type='text'>
+                                                            </div>
+                                                        </div>
+                                                        <div class='form-row'>
+                                                            <div class='col-xs-12 form-group card required'>
+                                                                <label class='control-label'>Card Number</label>
+                                                                <input autocomplete='off' class='form-control card-number' size='20' type='text'>
+                                                            </div>
+                                                        </div>
+                                                        <div class='form-row'>
+                                                            <div class='col-xs-4 form-group cvc required'>
+                                                                <label class='control-label'>CVC</label>
+                                                                <input autocomplete='off' class='form-control card-cvc' placeholder='ex. 311' size='4' type='text'>
+                                                            </div>
+                                                            <div class='col-xs-4 form-group expiration required'>
+                                                                <label class='control-label'>Expiration</label>
+                                                                <input class='form-control card-expiry-month' placeholder='MM' size='2' type='text'>
+                                                            </div>
+                                                            <div class='col-xs-4 form-group expiration required'>
+                                                                <label class='control-label'>&nbsp;</label>
+                                                                <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text'>
+                                                            </div>
+                                                        </div>
+                                                        <div class='form-row'>
+                                                            <div class='col-md-12'>
+                                                                <div class='form-control total btn btn-info'>
+                                                                    Total:
+                                                                    <span class='amount'>$300</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class='form-row'>
+                                                            <div class='col-md-12 form-group'>
+                                                                <button class='form-control btn btn-primary submit-button' type='submit'>Pay &raquo;</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class='form-row'>
+                                                            <div class='col-md-12 error form-group hide'>
+                                                                <div class='alert-danger alert'>
+                                                                    Please correct the errors and try again.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class='col-md-4'></div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+
+                                </div>
+                        </div>
+
+
+                       
+                    </div>
+
+            </div>
+            <script src="@Url.Content("~/Content/mytemplate/")js/easyResponsiveTabs.js" type="text/javascript"></script>
+            <script type="text/javascript">
+				$(document).ready(function () {
+					$('#horizontalTab1').easyResponsiveTabs({
+						type: 'default', //Types: default, vertical, accordion
+						width: 'auto', //auto or any width like 600px
+						fit: true   // 100% fit in a container
+					});
+				});
+            </script>
+        </div>
+    </div>
+        </div>
+        
+        
+        
+ <script type="text/javascript">
+$(function() {
+  $('form.require-validation').bind('submit', function(e) {
+    var $form         = $(e.target).closest('form'),
+        inputSelector = ['input[type=email]', 'input[type=password]',
+                         'input[type=text]', 'input[type=file]',
+                         'textarea'].join(', '),
+        $inputs       = $form.find('.required').find(inputSelector),
+        $errorMessage = $form.find('div.error'),
+        valid         = true;
+
+    $errorMessage.addClass('hide');
+    $('.has-error').removeClass('has-error');
+    $inputs.each(function(i, el) {
+      var $input = $(el);
+      if ($input.val() === '') {
+        $input.parent().addClass('has-error');
+        $errorMessage.removeClass('hide');
+        e.preventDefault(); // cancel on first error
+      }
+    });
+  });
+});
+
+$(function() {
+  var $form = $("#payment-form");
+
+  $form.on('submit', function(e) {
+    if (!$form.data('cc-on-file')) {
+      e.preventDefault();
+      Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+      Stripe.createToken({
+        number: $('.card-number').val(),
+        cvc: $('.card-cvc').val(),
+        exp_month: $('.card-expiry-month').val(),
+        exp_year: $('.card-expiry-year').val()
+      }, stripeResponseHandler);
+    }
+  });
+
+  function stripeResponseHandler(status, response) {
+    if (response.error) {
+      $('.error')
+        .removeClass('hide')
+        .find('.alert')
+        .text(response.error.message);
+    } else {
+      // token contains id, last4, and card type
+      var token = response['id'];
+      // insert the token into the form so it gets submitted to the server
+      $form.find('input[type=text]').empty();
+      $form.append("<input type='hidden' name='reservation[stripe_token]' value='" + token + "'/>");
+      $form.get(0).submit();
+    }
+  }
+})
+
+
+
+
+
+
+
+
+</script>
+<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
+<script src="~/Scripts/shiping.js"></script>

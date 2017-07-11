@@ -1,0 +1,836 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@{ 
+    if (Session["User"] == null)
+    {
+    <script>
+        $('#myModal88').modal('show');
+
+    </script>
+    }
+ }
+    <!-- navigation -->
+    <div class="navigation">
+        <div class="container">
+            <nav class="navbar navbar-default">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header nav_2">
+                    <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/Home/Index" class="act">Home</a></li>
+
+
+
+                        <!-- Mega Menu -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Products <b class="caret"></b></a>
+                            <ul class="dropdown-menu multi-column columns-3">
+                                <div class="row">
+                                    @foreach (var x in ViewBag.parent)
+                                    {
+                                        <div class="col-sm-3">
+                                            <ul class="multi-column-dropdown">
+                                                <h6>@x.Name</h6>
+                                                @foreach (var c in ViewBag.chlid)
+                                                {
+                                                    if (c.Parent == x.C_id)
+                                                    {
+                                                        if (c.T_id == 1)
+                                                        {
+                                                            <li><a href="/Home/Products/@c.C_id">@c.Name<span>New</span></a></li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li><a href="/Home/Products/@c.C_id">@c.Name</a></li>
+                                                        }
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                    
+                            </ul>
+
+                        </li>
+                        <li><a href="/Home/About">About Us</a></li>
+                        <li><a href="/Home/Mail">Mail Us</a></li>
+                        <li><a href="/Home/Cart">Cart <span class="glyphicon glyphicon-shopping-cart"></span></a></li>
+
+                        <li><a href="/Home/Checkout">Check Out <span class="glyphicon glyphicon-check" aria-hidden="true"></span></a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- //navigation -->
+
+
+@if (Session["User"] != null)
+{
+    <input type="hidden" value="true" id="session_field" />
+}
+else
+{
+    <input type="hidden" value="false" id="session_field" />
+
+}
+
+
+    <!-- banner -->
+    <div class="banner">
+        <div class="container">
+            <h3>Electronic Store, <span>Special Offers</span></h3>
+        </div>
+    </div>
+    <!-- //banner -->
+
+    <!-- banner-bottom -->
+
+
+
+
+
+
+
+
+<div class="banner-bottom">
+    <div class="container">
+        <div class="col-md-5 wthree_banner_bottom_left" style="padding-right:50px">
+            
+
+            <div id="mycarousel" class="carousel slide col-xs-12" data-ride="carousel" data-interval="1000" >
+                <!-- time in milisec to change slide -->
+                <!-- orderd list -->
+
+                <div class="carousel-inner">
+                    <!-- for pictures -->
+                    <div class="item active">
+                        <!-- for items -->
+                        <img src="@Url.Content("~/Content/mytemplate/")images/i7.png">
+                        <!-- adding caption -->
+
+                    </div>
+                    <div class="item">
+                        <!-- for items -->
+                        <img src="@Url.Content("~/Content/mytemplate/")images/s8.png">
+
+                    </div>
+                    <div class="item">
+                        <!-- for items -->
+                        <img src="@Url.Content("~/Content/mytemplate/")images/i6.png">
+
+                    </div>
+                    <div class="item">
+                        <!-- for items -->
+                        <img src="@Url.Content("~/Content/mytemplate/")images/i62.png">
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+        <div class="col-md-7 wthree_banner_bottom_right">
+            <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                <ul id="myTab" class="nav nav-tabs" role="tablist">
+                    @{
+                        int count = 1;
+                     }
+
+                    @foreach (var x in ViewBag.headerCat)
+                    {
+
+                        if (count == 1)
+                        {
+                            <li role="presentation" class="active"><a href="#@x.Name" id="home-tab" role="tab" data-toggle="tab" aria-controls="home">@x.Name</a></li>
+                        }
+                        else
+                        {
+                            <li role="presentation"><a href="#@x.Name" id="home-tab" role="tab" data-toggle="tab" aria-controls="home">@x.Name</a></li>
+                        }
+                        count++;
+                    }
+
+
+
+                </ul>
+                <div id="myTabContent" class="tab-content">
+
+                    @{
+                        count = 1;
+                    }
+
+                    @foreach (var hc in ViewBag.headerCat)
+                    {
+
+                        if (count == 1)
+                        {
+                            <div role="tabpanel" class="tab-pane fade active in" id="@hc.Name" aria-labelledby="home-tab">
+                                <div class="agile_ecommerce_tabs">
+
+
+
+
+                                    @foreach (var x in ViewBag.products)
+                                    {
+                                        if (x.C_id != hc.C_id)
+                                        {
+                                            continue;
+                                        }
+                                        <div class="col-md-4 agile_ecommerce_tab_left">
+                                            <div class="hs-wrapper">
+
+
+                                                @foreach (var i in ViewBag.images)
+                                                {
+                                                    if (x.P_id == i.P_id)
+                                                    {
+                                                        <img src="/UploadedFiles/@i.Image_name" alt="@x.Name" class="img-responsive" />
+                                                    }
+
+                                                }
+                                                <div class="w3_hs_bottom w3_hs_bottom_sub1">
+                                                    <ul>
+                                                        <li>
+                                                            <a><span onclick=f1("@x.P_id") class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <h5><a href="/Home/Single/?name=@x.P_id">@x.Name</a></h5>
+                                            <div class="simpleCart_shelfItem">
+                                                <p>
+                                                    @if (x.Old_price != 0)
+                                                    {
+                                                        <span>RS @x.Old_price.ToString("#,##0")</span>} <i class="item_price">RS @x.Price.ToString("#,##0")</i>
+                                                    </p>
+
+                                                    <input type="hidden" name="cmd" value="_cart" />
+                                                    <input type="hidden" name="add" id="ATC_pid" value="@x.P_id" />
+                                                    @if (Session["User"] != null)
+                                                    {
+
+                                                        <input type="hidden" name="w3ls_item" id="@x.P_id" value="@x.Name" />
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="hidden" name="w3ls_item" id="@x.P_id" value="" />
+
+                                                    }
+                                                    <input type="hidden" name="amount" value="@x.Price" />
+                                                    @{
+                                                        if (x.T_id == 3)
+                                                        {
+                                                            <button type="submit" class="w3ls-cart" id="" disabled style="color:red">Out Of Stock</button>
+
+                                                        }
+                                                        else
+                                                        {
+
+                                                            <button type="submit" class="w3ls-cart" id="" onclick=addToCart("@x.P_id")>Add to cart</button>
+                                                        }
+                                                    }
+                                                </div>
+
+                                                @switch ((int)x.T_id)
+                                                {
+                                                case 1:
+                                                <div class="mobiles_grid_pos">
+                                                    <h6>New</h6>
+                                                </div>
+                                                break;
+                                                case 2:
+                                                <div class="mobiles_grid_pos">
+                                                    <h6>Sale</h6>
+                                                </div>
+                                                break;
+
+                                                default:
+                                                break;
+
+                                                }
+
+                                                
+
+                                            </div>
+                                                        }
+
+                                    
+
+
+
+
+
+
+                                    <div class="clearfix"> </div>
+                                </div>
+                            </div>
+
+
+                        }
+                        else
+                        {
+                            <div role="tabpanel" class="tab-pane fade" id="@hc.Name" aria-labelledby="audio-tab">
+                                <div class="agile_ecommerce_tabs">
+
+
+
+
+
+                                    @foreach (var x in ViewBag.products)
+                                    {
+                                        if (x.C_id != hc.C_id)
+                                        {
+                                            continue;
+                                        }
+                                        <div class="col-md-4 agile_ecommerce_tab_left">
+                                            <div class="hs-wrapper">
+
+
+                                                @foreach (var i in ViewBag.images)
+                                                {
+                                                    if (x.P_id == i.P_id)
+                                                    {
+                                                        <img src="/UploadedFiles/@i.Image_name" alt="@x.Name" class="img-responsive" />
+                                                    }
+
+                                                }
+                                                <div class="w3_hs_bottom w3_hs_bottom_sub1">
+                                                    <ul>
+                                                        <li>
+                                                            <a><span onclick=f1("@x.P_id") class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <h5><a href="/Home/Single/?name=@x.P_id">@x.Name</a></h5>
+                                            <div class="simpleCart_shelfItem">
+                                                <p>
+                                                    @if (x.Old_price != 0)
+                                                    {
+                                                        <span>RS @x.Old_price.ToString("#,##0")</span>} <i class="item_price">RS @x.Price.ToString("#,##0")</i>
+                                                    </p>
+
+                                                    <input type="hidden" name="cmd" value="_cart" />
+                                                    <input type="hidden" name="add" id="ATC_pid" value="@x.P_id" />
+                                                    @if (Session["User"] != null)
+                                                    {
+
+                                                        <input type="hidden" name="w3ls_item" id="@x.P_id" value="@x.Name" />
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="hidden" name="w3ls_item" id="@x.P_id" value="" />
+
+                                                    }
+                                                    <input type="hidden" name="amount" value="@x.Price" />
+                                                    @{
+                                                        if (x.T_id == 3)
+                                                        {
+                                                            <button type="submit" class="w3ls-cart" id="" disabled style="color:red">Out Of Stock</button>
+
+                                                        }
+                                                        else
+                                                        {
+
+                                                            <button type="submit" class="w3ls-cart" id="" onclick=addToCart("@x.P_id")>Add to cart</button>
+                                                        }
+                                                    }
+                                                </div>
+
+                                                @switch ((int)x.T_id)
+                                                {
+                                                case 1:
+                                                <div class="mobiles_grid_pos">
+                                                    <h6>New</h6>
+                                                </div>
+                                                break;
+                                                case 2:
+                                                <div class="mobiles_grid_pos">
+                                                    <h6>Sale</h6>
+                                                </div>
+                                                break;
+
+                                                default:
+                                                break;
+
+                                                }
+
+                                                
+
+                                            </div>
+                                                        }
+
+
+
+
+
+
+
+                                    <div class="clearfix"> </div>
+                                </div>
+                            </div>
+                        }
+                        count++;
+                    }
+
+
+                </div>
+            </div>
+            </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- //banner-bottom -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- banner-bottom1 -->
+<div class="banner-bottom1">
+    <div class="agileinfo_banner_bottom1_grids">
+        <div class="col-md-7 agileinfo_banner_bottom1_grid_left">
+            <h3>Grand Opening Event With flat<span>20% <i>Discount</i></span></h3>
+            <a href="">Shop Now</a>
+        </div>
+        <div class="col-md-5 agileinfo_banner_bottom1_grid_right">
+            <h4>hot deal</h4>
+            <div class="timer_wrap">
+                <div id="counter"> </div>
+            </div>
+            <script src="@Url.Content("~/Content/mytemplate/")js/jquery.countdown.js"></script>
+            <script src="@Url.Content("~/Content/mytemplate/")js/script.js"></script>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+<!-- //banner-bottom1 --> 
+    <!-- special-deals -->
+    <div class="special-deals">
+        <div class="container">
+            <h2>Special Deals</h2>
+            <div class="w3agile_special_deals_grids">
+                <div class="col-md-7 w3agile_special_deals_grid_left">
+                    <div class="w3agile_special_deals_grid_left_grid">
+                        <img src="@Url.Content("~/Content/mytemplate/")images/21.jpg" alt=" " class="img-responsive" />
+                        <div class="w3agile_special_deals_grid_left_grid_pos1">
+                            <h5>30%<span>Off/-</span></h5>
+                        </div>
+                        <div class="w3agile_special_deals_grid_left_grid_pos">
+                            <h4>We Offer <span>Best Products</span></h4>
+                        </div>
+                    </div>
+                    <div class="wmuSlider example1">
+                        <div class="wmuSliderWrapper">
+                            <article style="position: absolute; width: 100%; opacity: 0;">
+                                <div class="banner-wrap">
+                                    <div class="w3agile_special_deals_grid_left_grid1">
+                                        <img src="@Url.Content("~/Content/mytemplate/")images/t1.png" alt=" " class="img-responsive" />
+                                        <p>
+                                            Quis autem vel eum iure reprehenderit qui in ea voluptate
+                                            velit esse quam nihil molestiae consequatur, vel illum qui dolorem
+                                            eum fugiat quo voluptas nulla pariatur
+                                        </p>
+                                        <h4>Laura</h4>
+                                    </div>
+                                </div>
+                            </article>
+                            <article style="position: absolute; width: 100%; opacity: 0;">
+                                <div class="banner-wrap">
+                                    <div class="w3agile_special_deals_grid_left_grid1">
+                                        <img src="@Url.Content("~/Content/mytemplate/")images/t2.png" alt=" " class="img-responsive" />
+                                        <p>
+                                            Quis autem vel eum iure reprehenderit qui in ea voluptate
+                                            velit esse quam nihil molestiae consequatur, vel illum qui dolorem
+                                            eum fugiat quo voluptas nulla pariatur
+                                        </p>
+                                        <h4>Michael</h4>
+                                    </div>
+                                </div>
+                            </article>
+                            <article style="position: absolute; width: 100%; opacity: 0;">
+                                <div class="banner-wrap">
+                                    <div class="w3agile_special_deals_grid_left_grid1">
+                                        <img src="@Url.Content("~/Content/mytemplate/")images/t3.png" alt=" " class="img-responsive" />
+                                        <p>
+                                            Quis autem vel eum iure reprehenderit qui in ea voluptate
+                                            velit esse quam nihil molestiae consequatur, vel illum qui dolorem
+                                            eum fugiat quo voluptas nulla pariatur
+                                        </p>
+                                        <h4>Rosy</h4>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <script src="@Url.Content("~/Content/mytemplate/")js/jquery.wmuSlider.js"></script>
+                    <script>
+							$('.example1').wmuSlider();
+                    </script>
+                </div>
+                <div class="col-md-5 w3agile_special_deals_grid_right">
+                    <img src="@Url.Content("~/Content/mytemplate/")images/20.jpg" alt=" " class="img-responsive" />
+                    <div class="w3agile_special_deals_grid_right_pos">
+                        <h4>Women's <span>Special</span></h4>
+                        <h5>save up <span>to</span> 30%</h5>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+    <!-- //special-deals -->
+
+
+
+
+
+
+
+    <!-- new-products -->
+  <div class="w3l_related_products">
+    <div class="container">
+        <h3>New Products</h3>
+        <ul id="flexiselDemo2">
+
+
+          <!--  <li>
+                <div class="w3l_related_products_grid">
+                    <div class="agile_ecommerce_tab_left mobiles_grid">
+                        <div class="hs-wrapper hs-wrapper3">
+                            <img src="@Url.Content("~/Content/mytemplate/")images/34.jpg" alt=" " class="img-responsive" />
+                            <img src="@Url.Content("~/Content/mytemplate/")images/35.jpg" alt=" " class="img-responsive" />
+                            <img src="@Url.Content("~/Content/mytemplate/")images/27.jpg" alt=" " class="img-responsive" />
+                            <img src="@Url.Content("~/Content/mytemplate/")images/28.jpg" alt=" " class="img-responsive" />
+                            <img src="@Url.Content("~/Content/mytemplate/")images/37.jpg" alt=" " class="img-responsive" />
+                            <div class="w3_hs_bottom">
+                                <div class="flex_ecommerce">
+                                    <a href="#" data-toggle="modal" data-target="#myModal6"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <h5><a href="single.html">Kid's Toy</a></h5>
+                        <div class="simpleCart_shelfItem">
+                            <p class="flexisel_ecommerce_cart"><span>$150</span> <i class="item_price">$100</i></p>
+                            <form action="#" method="post">
+                                <input type="hidden" name="cmd" value="_cart">
+                                <input type="hidden" name="add" value="1">
+                                <input type="hidden" name="w3ls_item" value="Kid's Toy">
+                                <input type="hidden" name="amount" value="100.00">
+                                <button type="submit" class="w3ls-cart">Add to cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+              -->
+
+
+
+            @foreach (var x in ViewBag.newProducts)
+            {
+                <li>
+                    <div class="w3l_related_products_grid">
+                        <div class="agile_ecommerce_tab_left mobiles_grid">
+                            <div class="hs-wrapper hs-wrapper3">
+
+
+                                @foreach (var i in ViewBag.images)
+                                {
+                                    if (x.P_id == i.P_id)
+                                    {
+                                        <img src="/UploadedFiles/@i.Image_name" alt="@x.Name" class="img-responsive" />
+                                    }
+
+                                }
+                                <div class="w3_hs_bottom">
+                                    <div class="flex_ecommerce">
+                                        <a><span onclick=f1("@x.P_id") class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <h5><a href="/Home/Single/?name=@x.P_id">@x.Name</a></h5>
+                            <div class="simpleCart_shelfItem">
+                                <p>
+                                    @if (x.Old_price != 0)
+                                    {
+                                        <span>RS @x.Old_price.ToString("#,##0")</span>} <i class="item_price">RS @x.Price.ToString("#,##0")</i>
+                                    </p>
+                                        <input type="hidden" name="cmd" value="_cart" />
+                                        <input type="hidden" name="add" id="ATC_pid" value="@x.P_id" />
+                                        @if (Session["User"] != null)
+                                        {
+
+                                            <input type="hidden" name="w3ls_item" id="@x.P_id" value="@x.Name" />
+
+                                        }
+                                        else
+                                        {
+                                            <input type="hidden" name="w3ls_item" id="@x.P_id" value="" />
+
+                                        }
+                                        <input type="hidden" name="amount" value="@x.Price" />
+                                        <button type="button" class="w3ls-cart" id="btn_addCart" onclick=addToCart("@x.P_id")>Add to cart</button>
+                                </div>
+                                @if (x.T_id == 1)
+                                {
+                                    <div class="mobiles_grid_pos">
+                                        <h6>New</h6>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </li>
+
+            }
+
+           
+        </ul>
+
+        <script type="text/javascript">
+					$(window).load(function() {
+						$("#flexiselDemo2").flexisel({
+							visibleItems:4,
+							animationSpeed: 1000,
+							autoPlay: true,
+							autoPlaySpeed: 3000,
+							pauseOnHover: true,
+							enableResponsiveBreakpoints: true,
+							responsiveBreakpoints: {
+								portrait: {
+									changePoint:480,
+									visibleItems: 1
+								},
+								landscape: {
+									changePoint:640,
+									visibleItems:2
+								},
+								tablet: {
+									changePoint:768,
+									visibleItems: 3
+								}
+							}
+						});
+
+					});
+        </script>
+        <script type="text/javascript" src="@Url.Content("~/Content/mytemplate/")js/jquery.flexisel.js"></script>
+
+
+    </div>
+</div>
+    <!-- //new-products -->
+
+
+<div class="modal video-modal fade" id="myModal9" tabindex="-1" role="dialog" aria-labelledby="myModal9">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <section>
+                <div class="modal-body">
+                    <div class="col-md-5 modal_body_left">
+                        <img id="Mimage" src="" alt=" " class="img-responsive" />
+                    </div>
+                    <div class="col-md-7 modal_body_right">
+                        <h4 id="hName"></h4>
+                        <p id="pDescription">
+
+                        </p>
+                        <div class="rating">
+                            
+                        </div>
+                        <div class="modal_body_right_cart simpleCart_shelfItem">
+
+                            <p> <span id="sOldprice"> </span> <i class="item_price" id="iPrice"></i></p>
+                                <input type="hidden" name="cmd" value="_cart" />
+
+                                <input type="hidden" name="add" id="mfpid" value="" />
+                                <input type="hidden" name="w3ls_item" id="mfname" value="" />
+                                <input type="hidden" name="amount" id="mfprice" value="" />
+                                <h4 style="text-align:center; color:red; padding-bottom:0px; padding-top:-20px; font:cursive" id="modelValidation"></h4>
+
+                                <button type="submit" class="w3ls-cart" onclick=addToCart("") id="cart_btn">Add to cart</button>
+                        </div>
+                        <h5>Color</h5>
+                        <div class="color-quality">
+                            <ul>
+                                <li><a href="#"><span></span></a></li>
+                                <li><a href="#" class="brown"><span></span></a></li>
+                                <li><a href="#" class="purple"><span></span></a></li>
+                                <li><a href="#" class="gray"><span></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- top-brands -->
+    <div class="top-brands">
+        <div class="container">
+            <h3>Top Brands</h3>
+            <div class="sliderfig">
+                <ul id="flexiselDemo1">
+                    <li>
+                        <img src="@Url.Content("~/Content/mytemplate/")images/tb1.jpg" alt=" " class="img-responsive" />
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Content/mytemplate/")images/tb2.jpg" alt=" " class="img-responsive" />
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Content/mytemplate/")images/tb3.jpg" alt=" " class="img-responsive" />
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Content/mytemplate/")images/tb4.jpg" alt=" " class="img-responsive" />
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Content/mytemplate/")images/tb5.jpg" alt=" " class="img-responsive" />
+                    </li>
+                </ul>
+            </div>
+            <script type="text/javascript">
+					$(window).load(function() {
+						$("#flexiselDemo1").flexisel({
+							visibleItems: 4,
+							animationSpeed: 1000,
+							autoPlay: true,
+							autoPlaySpeed: 3000,
+							pauseOnHover: true,
+							enableResponsiveBreakpoints: true,
+							responsiveBreakpoints: {
+								portrait: {
+									changePoint:480,
+									visibleItems: 1
+								},
+								landscape: {
+									changePoint:640,
+									visibleItems:2
+								},
+								tablet: {
+									changePoint:768,
+									visibleItems: 3
+								}
+							}
+						});
+
+					});
+            </script>
+            <script type="text/javascript" src="@Url.Content("~/Content/mytemplate/")js/jquery.flexisel.js"></script>
+        </div>
+    </div>
+    <!-- //top-brands -->
+   <script>
+    function f1(p_id) {
+
+        var d = { "p_id": p_id };
+
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            url: "/Home/ProductsModelAjax",
+            data: d,
+            success: function (resp) {
+                if (resp.valid == true)
+                {
+
+                    $('#Mimage').attr('src', resp.image);
+                    $("#hName").text(resp.name)
+                    $("#pDescription").text(resp.description)
+                    if (resp.oldprice != 0) {
+                        $("#sOldprice").text("Rs " + resp.oldprice.toLocaleString())
+                    }
+                    $("#iPrice").text("Rs " + resp.price.toLocaleString())
+                    $('#mfpid').attr('value', resp.pid);
+                    $('#mfprice').attr('value', resp.price);
+
+                    var valid = $("#session_field").val();
+                    if (valid == "false") {
+                        $('#myModal9').modal();
+                        $("#modelValidation").text("Please Login First!");
+
+                        return false;
+                    }
+                    $('#mfname').attr('value', resp.name);
+                    $('#myModal9').modal();
+                }
+
+            },
+            error: function (e) {
+                alert("error");
+                //somethin went wrong
+            }
+        };
+        $.ajax(settings);//asynchronous
+        return false;
+
+    }
+
+</script>

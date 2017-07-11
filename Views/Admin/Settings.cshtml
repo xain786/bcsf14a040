@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/_adminview.cshtml";
+}
+
+<!--inner block start here-->
+<div class="inner-block" style="padding-bottom:450px">
+    <div class="product-block">
+        <div class="pro-head">
+            <h2>Settings</h2>
+        </div>
+
+
+
+
+            <div class="row">
+
+                <div class="container">
+
+                    <div class="col-sm-offset-2 col-md-8" style="padding-left: 90px">
+                            <nav class="navbar navbar-default sidebar t" role="navigation">
+                                <div class="container-fluid">
+                                    <div class="navbar-header">
+                                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+                                            <span class="sr-only">Toggle navigation</span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                        </button>
+                                    </div>
+
+
+                                    <div class="collapse navbar-collapse" id="#bs-sidebar-navbar-collapse-1">
+                                        <ul class="nav navbar-nav">
+                                            <li><a href="">Password<span style="font-size:16px;" class="pull-right hidden-xs "></span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </nav>
+
+
+
+
+                            <!-- ######################################################################################################################### -->
+
+                            
+
+
+                            <form method="post" style="padding-left: 100px; padding-top: 5px;" class="form-horizontal" role="form" id="changeform">
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-0 col-md-12">
+                                        <input type="Password" placeholder="Current Password" class="form-control" id="oldpass" name="oldpass" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-0 col-md-12">
+                                        <input type="Password" placeholder="New Password" class="form-control" id="newpwd" name="newpwd" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-0 col-md-12">
+                                        <input type="Password" placeholder="Confirm Password" class="form-control" id="cpwd" name="cpwd" required>
+                                    </div>
+                                </div>
+
+                                <h4 style="text-align:center; color:red; padding-bottom:0px; padding-top:-20px; font:cursive" id="validate"> </h4>
+
+                                <button type="button" onclick=changepass() class="btn btn-success" name="password" value="pass">Apply Change</button>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+
+
+
+<!--inner block end here-->
+
+<script>
+
+    function changepass() {
+
+        var oldpass = $("#oldpass").val()
+        var pass = $("#newpwd").val()
+        var cpass = $("#cpwd").val()
+
+        var $myForm = $('#changeform');
+
+        if (!$myForm[0].checkValidity()) {
+            // If the form is invalid, submit it. The form won't actually submit;
+            // this will just cause the browser to display the native HTML5 error messages.
+            $myForm.find(':button').click();
+        }
+
+        if(pass !== cpass)
+        {
+            $("#validate").text("Password Miss Match!");
+            return false;
+        }
+
+        var d = { "oldpass": oldpass, "cpass": cpass, "pass": pass };
+
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            url: "/Admin/ChangePassAjax",
+            data: d,
+            success: function (resp) {
+                if (resp.valid == true)
+                {
+                    $("#validate").text(resp.message);
+                    $("#oldpass").val("")
+                    $("#newpwd").val("")
+                    $("#cpwd").val("")
+                }
+
+
+            },
+            error: function (e) {
+                alert("error");
+                //somethin went wrong
+            }
+        };
+
+        $.ajax(settings);//asynchronous*/
+
+        return false;
+
+    }
+
+</script>

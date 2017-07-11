@@ -1,0 +1,135 @@
+﻿
+@model IEnumerable<WebApplication1.Models.ProductView>
+@{
+    
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_adminview.cshtml";
+}
+
+
+
+<!--inner block start here-->
+<div class="inner-block">
+    <div class="product-block">
+        <div class="pro-head">
+            <h2>Products</h2>
+        </div>
+
+
+      
+        @{
+            foreach (var x in Model)
+            {
+                <div class="col-md-3 product-grid" style="height: 100%; overflow: auto; " id="mytable1"   >
+                    <div class="product-items">
+                        <div class="project-eff">
+                            <div id="nivo-lightbox-demo"> <p> <a data-lightbox-gallery="gallery1" id="nivo-lightbox-demo"><span class="rollover1"> </span> </a></p></div>
+                            <img id="productImage" class="img-responsive" height="250" width="200" src="/UploadedFiles/@x.Image.Image_name" alt="">
+                        </div>
+                        <div class="produ-cost">
+                            <input type="hidden" value="@x.Product.P_id"  id="product_id"/>
+                            <h4>@x.Product.Name</h4>
+                            <h5 style="padding-bottom:2px">Quantity: @x.Product.Stock ID: @x.Product.P_id</h5>
+                            <h5>RS @x.Product.Price</h5>
+
+                        </div>
+                        <div class="row" >
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-success" style="width:100%" onclick=update("@x.Product.P_id")>Update</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-danger" style="width:100%" onclick=deletee("@x.Product.P_id")>Delete</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" value="@x.Product.P_id" id="produc_id"/>
+            }
+        }
+
+
+
+        <div class="clearfix"> </div>
+    </div>
+</div>
+
+<script>
+    function update(p_id) {
+
+        var d = { "p_id": p_id };
+
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            url: "/Admin/updateProductAjax",
+            data: d,
+            success: function (resp) {
+                if (resp.valid) {
+                    location.href = resp.urlToRedirect;
+                }
+                else {
+                    location.href = resp.urlToRedirect;
+                }
+            },
+            error: function (e) {
+                alert("error");
+                //somethin went wrong
+            }
+        };
+        $.ajax(settings);//asynchronous
+        return false;
+
+    }
+
+    function deletee(p_id) {
+
+        var d = { "p_id": p_id };
+
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            url: "/Admin/deleteProductAjax",
+            data: d,
+            success: function (resp) {
+                if (resp.valid) {
+                    location.href = resp.urlToRedirect;
+                }
+                else {
+                    location.href = resp.urlToRedirect;
+                }
+            },
+            error: function (e) {
+                alert("error");
+                //somethin went wrong
+            }
+        };
+        $.ajax(settings);//asynchronous
+        return false;
+
+    }
+
+
+   /* $('#mytable1').mousedown(function (event) {
+        var pid = $("#produc_id").val();
+        switch (event.which) {
+            case 1:
+                 //alert('Left Mouse button pressed.');
+                update(pid);
+                break;
+            case 2:
+                //alert('Middle Mouse button pressed.');
+                break;
+            case 3:
+                //alert('Right Mouse button pressed.');
+                deletee(pid);
+
+                break;
+            default:
+                //alert('You have a strange Mouse!');
+        }
+    });*/
+</script>
+
+<!--inner block end here-->
+

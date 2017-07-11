@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "News Letter";
+    Layout = "~/Views/Shared/_adminview.cshtml";
+}
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+@model List<WebApplication1.Models.News_letter>
+   
+<!--inner block start here-->
+
+    <div class="inbox" style="padding-left:30px; padding-top:20px">
+        <h2>Inbox</h2>
+        </div>
+    
+<div class="container" style="padding-bottom:300px">
+    <div class="row">
+        <div class="col-md-12">
+            
+            <div class="alert alert-success" style="display:none;">
+                <span class="glyphicon glyphicon-ok"></span> Drag table row and cange Order
+            </div>
+            <table class="table" id="newsLetter">
+                <thead>
+                    <tr>
+                        <th>
+                            Email
+                        </th>
+                        
+                    </tr>
+                </thead>
+               
+                <tbody>
+@{
+    foreach (var x in Model)
+    {
+                    <tr>
+                      
+                        <td>
+                           @x.Email 
+                        </td>
+                                
+                    </tr>
+    }
+}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--inner block end here-->
+
+<script>
+    $(document).ready(function () {
+        $('#newsLetter').dataTable();
+    });
+    </script>

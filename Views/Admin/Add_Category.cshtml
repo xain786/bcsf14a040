@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "Add_Category";
+    Layout = "~/Views/Shared/_adminview.cshtml";
+}
+
+<div class="inner-block">
+    <div class="inbox">
+        <h2>Add Category</h2>
+
+        <form class="form-horizontal" action='@Url.Content("~/Admin/Add_Category")' method="post"><!--calling Add_Main_Category-->
+            <fieldset>
+                <!-- Form Name -->
+                <legend>Main Category</legend>
+               
+                <!-- name-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_name">CATEGORY NAME</label>
+                    <div class="col-md-4">
+                        <input id="product_name" name="Name" placeholder="CATEGORY NAME" class="form-control input-md" required="" type="text">
+
+                    </div>
+                </div>
+
+                <label class="col-md-4 control-label" for="product_categorie">TAGS</label>
+                <div style="padding-left: 450px; padding-bottom:10px; padding-top:8px">
+                    <input type="radio" name="T_id" value="1"> New
+                    <input type="radio" name="T_id" value="2"> Sale
+                    <input type="radio" name="T_id" value="3"> Imported
+                    <input type="radio" name="T_id" value="4" checked="checked"> Regular
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="singlebutton"></label>
+                    <div class="col-md-4" style="padding-top:15px">
+
+                        <h4 style="text-align:center; color:red; padding-bottom:15px"> @TempData["v_mainCategory"]</h4>
+                        <button type="submit" name="button" value="main_category" class="btn btn-primary" style="padding-left:70px; padding-right:70px">ADD Category</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+        <br />
+
+       
+
+            <form class="form-horizontal" action='@Url.Content("~/Admin/Add_Category")' method="post"><!--calling Add_Main_Category-->
+            <fieldset>
+                <!-- Form Name -->
+                <legend>Sub Category</legend>
+                <!-- Select Main category -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_categorie">MAIN CATEGORY</label>
+                    <div class="col-md-4">
+                        <select id="product_categorie" name="M_name" class="form-control">
+                            @{ 
+                                var main = ViewBag.main_category_list;
+                                foreach (var x in main)
+                                {
+                                    <option>@x.Name</option>
+                                }
+                             }
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- name-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_name">SUB CATEGORY</label>
+                    <div class="col-md-4" >
+                        <input id="product_name" name="Name" placeholder="CATEGORY NAME" class="form-control input-md" required="" type="text">
+
+                    </div>
+                </div>
+
+                <label class="col-md-4 control-label" for="product_categorie">TAGS</label>
+                <div style="padding-left: 450px; padding-bottom:10px; padding-top:8px">
+                    <input type="radio" name="T_id" value="1"> New
+                    <input type="radio" name="T_id" value="2"> Sale
+                    <input type="radio" name="T_id" value="3"> Imported
+                    <input type="radio" name="T_id" value="4" checked="checked"> Regular
+
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="singlebutton"></label>
+                    <div class="col-md-4" style="padding-top:15px">
+                        <h4 style="text-align:center; color:red; padding-bottom:15px"> @TempData["v_subCategory"]</h4>
+                        <button type="submit" name="button" value="sub_category" class="btn btn-primary" style="padding-left:70px; padding-right:70px">ADD CATEGORY</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+            
+
+
+        <form class="form-horizontal" action='@Url.Content("~/Admin/Add_Category")' method="post"><!--calling Add_Main_Category-->
+            <fieldset>
+                <!-- Form Name -->
+                <legend>BRAND</legend>
+                <!-- name-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_name">BRAND</label>
+                    <div class="col-md-4">
+                        <input id="product_name" name="Name" placeholder="BRAND NAME" class="form-control input-md" required="" type="text">
+                    </div>
+                </div>
+                <label class="col-md-4 control-label" for="product_categorie">TAGS</label>
+                <div style="padding-left: 450px; padding-bottom:10px; padding-top:8px">
+                    <input type="radio" name="T_id" value="1"> New
+                    <input type="radio" name="T_id" value="2"> Sale
+                    <input type="radio" name="T_id" value="3"> Imported
+                    <input type="radio" name="T_id" value="4" checked="checked"> Regular
+                </div>
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="singlebutton"></label>
+                    <div class="col-md-4" style="padding-top:15px">
+                        <h4 style="text-align:center; color:red; padding-bottom:15px"> @TempData["v_brand"]</h4>
+                        <button type="submit" name="button" value="brand" class="btn btn-primary" style="padding-left:70px; padding-right:70px">ADD Brand</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+    </div>
+</div>
+

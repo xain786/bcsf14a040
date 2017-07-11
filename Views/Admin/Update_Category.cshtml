@@ -1,0 +1,244 @@
+﻿
+@{
+    ViewBag.Title = "Update Category";
+    Layout = "~/Views/Shared/_adminview.cshtml";
+}
+
+
+
+
+<div class="inner-block">
+    <div class="inbox">
+        <h2>Update Category</h2>
+
+        <form class="form-horizontal">
+            <!--calling Add_Main_Category-->
+            <fieldset>
+                <!-- Form Name -->
+                <legend>Main Category</legend>
+
+                <!-- Select Main category -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_categorie">MAIN CATEGORY</label>
+                    <div class="col-md-4">
+                        <select id="Main_Category" name="M_name" class="form-control">
+                            @{
+                                var main1 = ViewBag.main_category_list;
+                                foreach (var x in main1)
+                                {
+                                    <option value="@x.C_id">@x.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <!-- New name-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_name">CATEGORY NAME</label>
+                    <div class="col-md-4">
+                        <input id="main_new_name" name="Name" placeholder="NEW NAME" class="form-control input-md" required="" type="text">
+
+                    </div>
+                </div>
+
+                <h4 id="c_output1" style="text-align:center; color:red; padding-bottom:7px; padding-top:5px"></h4>
+
+                <div id="loader1" style="text-align:center; color:red; padding-bottom:0px;margin-left:-12px; padding-top:5px; display:none">
+                    <img src="@Url.Content("~/Content/mytemplate/")images/ajax-loader.gif" alt="loading" />
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="singlebutton"></label>
+                    <div class="col-md-4" style="padding-top:15px">
+
+                        <h4 style="text-align:center; color:red; padding-bottom:15px"> @TempData["v_mainCategory"]</h4>
+                        <button type="button" onclick=UpdateMainCat() class="btn btn-primary" style="padding-left:70px; padding-right:70px">Update CATEGORY</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+        <br />
+
+
+
+        <form class="form-horizontal">
+            <!--calling Add_Main_Category-->
+            <fieldset>
+                <!-- Form Name -->
+                <legend>Sub Category</legend>
+                <!-- Select Main category -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_categorie">MAIN CATEGORY</label>
+                    <div class="col-md-4">
+                        <select id="Main_Category_1" name="M_name" class="form-control" onchange=DisplaySubCatagory()>
+                            <option selected disabled>Selete Category</option>
+                            @{
+                                var main = ViewBag.main_category_list;
+                                foreach (var x in main)
+                                {
+                                    <option value="@x.C_id">@x.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <!-- sub name-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_categorie">SUB CATEGORY</label>
+                    <div class="col-md-4">
+                        <select id="Sub_Category_1" name="M_name" class="form-control" onchange=DisplaySubCatagory()>
+                            <option selected disabled>Selete Category</option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <!-- New name-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="product_name">CATEGORY NAME</label>
+                    <div class="col-md-4">
+                        <input id="sub_new_name" name="Name" placeholder="NEW NAME" class="form-control input-md" required="" type="text">
+
+                    </div>
+                </div>
+                <h4 id="c_output" style="text-align:center; color:red; padding-bottom:7px; padding-top:5px"></h4>
+
+                <div id="loader" style="text-align:center; color:red; padding-bottom:0px;margin-left:-12px; padding-top:5px; display:none">
+                    <img src="@Url.Content("~/Content/mytemplate/")images/ajax-loader.gif" alt="loading" />
+                </div>
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="singlebutton"></label>
+                    <div class="col-md-4" style="padding-top:5px">
+                        <h4 style="text-align:center; color:red; padding-bottom:15px"> @TempData["v_subCategory"]</h4>
+                        <button onclick=UpdateSubCat() type="button" class="btn btn-primary" style="padding-left:70px; padding-right:70px">UPDATE CATEGORY</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<script>
+    function DisplaySubCatagory() {
+        var cat = $("#Main_Category_1").val();
+
+        var d = { "c_id": cat };
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            url: "/Admin/ShowSubCatAjax",
+            data: d,
+            success: function (resp) {
+                console.log(resp);
+                if(resp.valid == true)
+                {
+                    $("#Sub_Category_1 option").remove();
+
+
+                    $.each(resp.list, function (index, element) {
+                        $('#Sub_Category_1').append($('<option>', {
+                            value: element.C_id,
+                            text: element.Name
+                        }));
+
+                    });
+                }
+            },
+            error: function (e) {
+                alert("error");
+            }
+
+
+        };
+        $.ajax(settings);
+        return false;
+
+    }
+
+    function UpdateSubCat() {
+        $("#loader").show();
+
+        var cat = $("#Sub_Category_1").val();
+        
+        if (cat == "" || cat == null) {
+            $("#loader").hide();
+            alert("Seletct Catogory");
+
+            return false;
+        }
+
+        var newName = $("#sub_new_name").val();
+
+        if (newName == "" || newName == null) {
+            $("#loader").hide();
+            alert("Enter New Name");
+
+            return false;
+        }
+
+        var d = { "c_id": cat, "newName": newName };
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            url: "/Admin/UpdateSubCatAjax",
+            data: d,
+            success: function (resp) {
+                DisplaySubCatagory();
+                $("#loader").hide();
+                $("#c_output").text(resp.message);
+                $("#sub_new_name").val("");
+
+            },
+            error: function (e) {
+                alert("error");
+            }
+
+        };
+        $.ajax(settings);
+        return false;
+
+    }
+
+    function UpdateMainCat() {
+        $("#loader1").show();
+
+        var cat = $("#Main_Category").val();
+        var newName = $("#main_new_name").val();
+
+        if (newName == "" || newName == null)
+        {
+            $("#loader1").hide();
+            alert("Enter New Name");
+
+            return false;
+        }
+
+        var d = { "c_id": cat, "newName": newName };
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            url: "/Admin/UpdateMainCatAjax",
+            data: d,
+            success: function (resp) {
+                $("#loader1").hide();
+                $("#c_output1").text(resp.message);
+                $("#main_new_name").val("");
+            },
+            error: function (e) {
+                $("#loader1").hide();
+
+                alert("error");
+            }
+
+        };
+        $.ajax(settings);
+        return false;
+
+    }
+</script>
+

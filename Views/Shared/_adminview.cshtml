@@ -1,0 +1,373 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <link href="@Url.Content("~/Content/myadmin/")css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
+    <!-- Custom Theme files -->
+    <link href="@Url.Content("~/Content/myadmin/")css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!--js-->
+    <script src="@Url.Content("~/Content/myadmin/")js/jquery-2.1.1.min.js"></script>
+    <!--icons-css-->
+    <link href="@Url.Content("~/Content/myadmin/")css/font-awesome.css" rel="stylesheet">
+    <!--Google Fonts-->
+    <link href='//fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Work+Sans:400,500,600' rel='stylesheet' type='text/css'>
+    <!--static chart-->
+    <script src="@Url.Content("~/Content/myadmin/")js/Chart.min.js"></script>
+    <!--//charts-->
+    <!-- geo chart -->
+    <script src="//cdn.jsdelivr.net/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+    <script>window.modernizr || document.write('<script src="lib/modernizr/modernizr-custom.js"><\/script>')</script>
+    <!--<script src="lib/html5shiv/html5shiv.js"></script>-->
+    <!--skycons-icons-->
+    <script src="@Url.Content("~/Content/myadmin/")js/skycons.js"></script>
+    <!--//skycons-icons-->
+
+    <script src="@Url.Content("~/Content/myadmin/")js/jquery.magnific-popup.js" type="text/javascript"></script>
+
+    <!--live search-->
+    <link href="~/Content/AutoComplete/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/AutoComplete/jquery.js"></script>
+    <script src="~/Content/AutoComplete/jquery-ui.js"></script>
+
+    <script src="~/Scripts/myAjaxCallsAdmin.js"></script>
+
+    @RenderSection("scripts", false)
+</head>
+<body onload="getOrderCount()">
+    <div class="page-container">
+        <div class="left-content">
+            <div class="mother-grid-inner">
+                <!--header start here-->
+                <div class="header-main">
+                    <div class="header-left">
+                        <div class="logo-name">
+                            <a href="/Admin/Index">
+                                <h1>Electronic Store</h1>
+                                <!--<img id="logo" src="" alt="Logo"/>-->
+                            </a>
+                        </div>
+                     
+                        <div class="clearfix"> </div>
+                    </div>
+                  
+                    <div class="header-right">
+                        <div class="profile_details_left" id="header">
+                            <!--notifications of menu start -->
+                            <ul class="nofitications-dropdown">
+                                <li class="dropdown head-dpdn">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge" id="badgeCount"></span></a>
+                                    <ul class="dropdown-menu" id="messageDropDown">
+                                        
+                                    </ul>
+                                </li>
+                               
+                                <li class="dropdown head-dpdn">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-tasks"></i></a>
+                                    <ul class="dropdown-menu">
+                                        
+                                        <li>
+                                            <a href='@Url.Content("~/Admin/All_Orders/2")'>
+                                                <div class="task-info">
+                                                    <span class="task-desc">Pending Orders</span><span class="percentage" id="aa"></span>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                <div class="progress progress-striped active">
+                                                    <div id="aaa" class="bar blue" style="width:40%;"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            
+                                            <a href='@Url.Content("~/Admin/All_Orders/3")'>
+                                                <div class="task-info">
+                                                    <span class="task-desc">Confirmed Orders</span><span class="percentage" id="bb"></span>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                <div class="progress progress-striped active">
+                                                    <div id="bbb" class="bar blue" style="width:40%;"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href='@Url.Content("~/Admin/All_Orders/4")'>
+                                                <div class="task-info">
+                                                    <span class="task-desc">Delivered Orders</span><span class="percentage" id="cc"></span>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                <div class="progress progress-striped active">
+                                                    <div id="ccc" class="bar green" style="width: 33%;"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href='@Url.Content("~/Admin/All_Orders/5")'>
+                                                <div class="task-info">
+                                                    <span class="task-desc">Canceled Orders</span><span class="percentage" id="dd"></span>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                <div class="progress progress-striped active">
+                                                    <div id="ddd" class="bar  yellow" style="width: 80%;"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href='@Url.Content("~/Admin/All_Orders/6")'>
+                                                <div class="task-info">
+                                                    <span class="task-desc">Returned Orders</span><span class="percentage" id="ee"></span>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                <div class="progress progress-striped active">
+                                                    <div id="eee" class="bar  red" style="width: 80%;"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="clearfix"> </div>
+                        </div>
+                        @{ 
+                            var admin =(WebApplication1.Models.User)Session["Admin"];
+                        }
+                        <!--notification menu end -->
+                        <div class="profile_details">
+                            <ul>
+                                <li class="dropdown profile_details_drop">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <div class="profile_img">
+                                            <span class="prfil-img"><img style="width:50px;height:50px;" src="@Url.Content("~/Content/mytemplate/")images/user.png" alt=""> </span>
+                                            <div class="user-name">
+                                                <p>@admin.Nmae</p>
+                                                <span>Administrator</span>
+                                            </div>
+                                            <i class="fa fa-angle-down lnr"></i>
+                                            <i class="fa fa-angle-up lnr"></i>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu drp-mnu">
+                                        <li > <a href='@Url.Content("~/Admin/Settings")'><i class="fa fa-cog" ></i> Settings</a> </li>
+                                        <li > <a href='@Url.Content("~/Admin/AddEmploye")'><i class="fa fa-user"></i> Add Employee</a> </li>
+                                        <li> <a href='@Url.Content("~/Admin/Logout")'><i class="fa fa-sign-out"></i> Logout</a> </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <!--heder end here-->
+                <!-- script-for sticky-nav -->
+                <script>
+		$(document).ready(function() {
+			 var navoffeset=$(".header-main").offset().top;
+			 $(window).scroll(function(){
+				var scrollpos=$(window).scrollTop();
+				if(scrollpos >=navoffeset){
+					$(".header-main").addClass("fixed");
+				}else{
+					$(".header-main").removeClass("fixed");
+				}
+			 });
+
+		});
+                </script>
+                <!-- /script-for sticky-nav -->
+                <div>
+                    @RenderBody()
+                </div>
+                <!--copy rights start here-->
+                <div class="copyrights">
+                    <p>&copy; @DateTime.Now.Year Electronic Store. All rights reserved | Developed by <a target="_blank" href="https://www.linkedin.com/in/zain-asghar-3b2683142/">PAKtech Solutions</a></p>
+
+                </div>
+                <!--COPY rights end here-->
+            </div>
+        </div>
+        <!--slider menu-->
+        <div class="sidebar-menu">
+            <div class="logo">
+                <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> <a href="#">
+                    <span id="logo"></span>
+                    <!--<img id="logo" src="" alt="Logo"/>-->
+                </a>
+            </div>
+            <div class="menu">
+                <ul id="menu">
+                    <li id="menu-home"><a href='@Url.Content("~/Admin/Index")'><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
+
+                    <!--Orders-->
+                    <li>
+                        <a href="#"><i class="glyphicon glyphicon-list-alt" style="color:white"></i><span>Orders</span><span class="fa fa-angle-right" style="float: right"></span></a>
+                        <ul id="menu-academico-sub">
+                            <li id="menu-academico-avaliacoes"><a href='@Url.Content("~/Admin/All_Orders/1")'>Orders <samp id="all"></samp></a></li>
+                            <li id="menu-academico-boletim"><a href='@Url.Content("~/Admin/All_Orders/2")'>Pending <samp id="pending"></samp></a> </li>
+                            <li id="menu-academico-avaliacoes"><a href='@Url.Content("~/Admin/All_Orders/3")'>Confirmed <samp id="confirmed"></samp></a></li>
+                            <li id="menu-academico-boletim"><a href='@Url.Content("~/Admin/All_Orders/4")'>Deliverd <samp id="deliverd"></samp></a></li>
+                            <li id="menu-academico-avaliacoes"><a href='@Url.Content("~/Admin/All_Orders/5")'>Canceled <samp id="canceled"></samp></a></li>
+                            <li id="menu-academico-avaliacoes"><a href='@Url.Content("~/Admin/All_Orders/6")'>Returned <samp id="returned"></samp></a></li>
+
+                        </ul>
+                    </li>
+
+                    <!--eComers-->
+                    <li>
+                        <a href="#"><i class="fa fa-shopping-cart"></i><span>E-Commerce</span><span class="fa fa-angle-right" style="float: right"></span></a>
+                        <ul id="menu-academico-sub">
+                            <li id="menu-academico-avaliacoes"><a href='@Url.Content("~/Admin/Product")'>Product</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- add product/category-->
+                    <li>
+                        <a href="#"><i class="glyphicon glyphicon-plus" style="color:white"></i><span>Add</span><span class="fa fa-angle-right" style="float: right"></span></a>
+                        <ul id="menu-academico-sub">
+                            <li id="menu-academico-avaliacoes"><a href='@Url.Content("~/Admin/Add_Product")'>Add Product</a></li>
+                            <li id="menu-academico-boletim"><a href='@Url.Content("~/Admin/Add_Category")'>Add Category</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- update product/category-->
+                    <li>
+                        <a href="#"><i class="glyphicon glyphicon-refresh" style="color:white"></i><span>Update</span><span class="fa fa-angle-right" style="float: right"></span></a>
+                        <ul id="menu-academico-sub">
+                            <li id="menu-academico-avaliacoes"><a href='@Url.Content("~/Admin/Update_Product")'>Update Product</a></li>
+                            <li id="menu-academico-boletim"><a href='@Url.Content("~/Admin/Update_Category")'>Update Category</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- delete product/category-->
+                    <li>
+                        <a href="#"><i class="glyphicon glyphicon-trash" style="color:white"></i><span>Delete</span><span class="fa fa-angle-right" style="float: right"></span></a>
+                        <ul id="menu-academico-sub">
+                            <li id="menu-academico-avaliacoes"><a href='@Url.Content("~/Admin/Delete_Product")'>Delete Product</a></li>
+                            <li id="menu-academico-boletim"><a href='@Url.Content("~/Admin/Delete_Category")'>Delete Category</a></li>
+                        </ul>
+                    </li>
+
+                  
+
+                    <li>
+                        <a href="#"><i class="fa fa-envelope"></i><span>Mailbox</span><span class="fa fa-angle-right" style="float: right"></span></a>
+                        <ul id="menu-academico-sub">
+                            <li id="menu-academico-avaliacoes"><a href='@Url.Content("~/Admin/Inbox")'>Inbox</a></li>
+                            <li id="menu-academico-avaliacoes"><a href='@Url.Content("~/Admin/News_Letter")'>News Letter</a></li>
+
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+    <!--slide bar menu end here-->
+    <script>
+var toggle = true;
+
+$(".sidebar-icon").click(function() {
+  if (toggle)
+  {
+    $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+    $("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+    $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+    setTimeout(function() {
+      $("#menu span").css({"position":"relative"});
+    }, 400);
+  }
+                toggle = !toggle;
+            });
+    </script>
+    <!--scrolling js-->
+    <script src="@Url.Content("~/Content/myadmin/")js/jquery.nicescroll.js"></script>
+    <script src="@Url.Content("~/Content/myadmin/")js/scripts.js"></script>
+    <!--//scrolling js-->
+    <script src="@Url.Content("~/Content/myadmin/")js/bootstrap.js"> </script>
+    <!-- mother grid end here-->
+</body>
+</html>
+<script>
+    function getOrderCount()
+    {
+
+        var d = null;
+
+        var settings = {
+            type: "POST",
+            dataType: "json",
+            url: "/Admin/GetOrderCountAjax",
+            data: d,
+            success: function (resp) {
+                if (resp.valid == true)
+                {
+                    //console.log(resp.mail);
+                    //side bar orders
+                    $("#all").text("("+resp.all+")");
+                    $("#pending").text("(" + resp.pending + ")");
+                    $("#confirmed").text("(" + resp.confirmed + ")");
+                    $("#deliverd").text("(" + resp.deliverd + ")");
+                    $("#canceled").text("(" + resp.canceled + ")");
+                    $("#returned").text("(" + resp.returned + ")");
+
+
+                    //Nav bar orders
+                    $("#aa").text(resp.pendingPer + "%");
+                    $('div#aaa').width(resp.pendingPer + '%');
+                    $("#bb").text(resp.confirmedPer + "%");
+                    $('div#bbb').width(resp.confirmedPer + '%');
+                    $("#cc").text(resp.deliveredPer + "%");
+                    $('div#ccc').width(resp.deliveredPer + '%');
+                    $("#dd").text(resp.canceledPer + "%");
+                    $('div#ddd').width(resp.canceledPer + '%');
+                    $("#ee").text(resp.returnedPer + "%");
+                    $('div#eee').width(resp.returnedPer + '%');
+
+
+                    //Nav Bar Message
+                    $("#messageDropDown").html("");
+                    $("#badgeCount").text(resp.mail.length);
+                    $("#inbox_mailcount").text(resp.mail.length);
+
+                     $('#messageDropDown').append(
+                         $('<li>').append(
+                         $('<div>').attr('class','notification_header').append(
+                         $('<h3>').append("You have "+resp.mail.length+"new message")
+
+                         )));
+
+                    $.each(resp.mail, function (index, element) {
+                        $('#messageDropDown').append(
+                            $('<li>').append(
+                            $('<div>').attr('class' , 'notification_desc').append(
+                            $('<p>').append(element.Name+ " | " + element.Message).append(
+                            $('<p>').append(
+                            $('<span>').append(element.Date).append(
+                            $('<div>').attr('class', 'clearfix')
+                        ))))));
+                    });
+                }
+            },
+            error: function (e) {
+                alert("errorrrr");
+                //somethin went wrong
+            }
+        };
+
+        $.ajax(settings);//asynchronous
+
+        return false;
+    }
+
+
+</script>
